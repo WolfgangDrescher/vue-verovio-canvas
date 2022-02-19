@@ -2,11 +2,54 @@
 import { ref } from 'vue';
 
 const props = defineProps({
-  width: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
+    scale: {
+        type: Number,
+        required: false,
+        default: 50,
+        validator: value => {
+            return value >= 1 && value <= 1000;
+        },
+    },
+    width: {
+        type: Number,
+        required: false,
+        default: 640,
+    },
+    height: {
+        type: Number,
+        required: false,
+        default: 360,
+    },
+    viewMode: {
+        type: String,
+        required: false,
+        default: 'page', // page, horizontal, vertical
+    },
+    pageMargin: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    pageMarginTop: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    pageMarginRight: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    pageMarginBottom: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    pageMarginLeft: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
 });
 
 const style = ref({
