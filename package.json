@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "verovio": "^3.8.1",
     "vue": "^3.2.29"
   },
   "devDependencies": {
