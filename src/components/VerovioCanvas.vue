@@ -83,7 +83,6 @@ const { renderedScore, loadingMessage } = useVerovio(toRefs(props), verovioCanva
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: gray;
 }
 .verovio-canvas {
     position: relative;
