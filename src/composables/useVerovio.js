@@ -1,6 +1,7 @@
 import { ref, readonly, onMounted, watch, reactive } from 'vue';
 import verovio from 'verovio';
 import { useVerovioPagination } from './useVerovioPagination';
+import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 
 export function useVerovio(options, templateRef) {
 
@@ -17,18 +18,14 @@ export function useVerovio(options, templateRef) {
         footer,
     } = options;
 
-    const dimensions = reactive({
-        width: null,
-        height: null,
-    });
     const renderedScore = ref(null);
     const loadingMessage = ref(null)
     let verovioToolkit = ref(null);
     let verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
-    let resizeObserver = null;
 
     const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady);
+    const { dimensions } = useVerovioResizeObserver(templateRef);
 
     onMounted(() => {
         verovio.module.onRuntimeInitialized = async () => {
@@ -41,22 +38,6 @@ export function useVerovio(options, templateRef) {
     watch([scale, dimensions, viewMode], () => {
         redoLayout();
     });
-
-    watch(templateRef, elem => {
-        initResizeObserver(elem);
-    });
-
-    function initResizeObserver(elem) {
-        if(elem) {
-            dimensions.width = elem.clientWidth;
-            dimensions.height = elem.clientHeight;
-            resizeObserver = new ResizeObserver(([entry]) => {
-                dimensions.width = entry.target.clientWidth;
-                dimensions.height = entry.target.clientHeight;
-            });
-            resizeObserver.observe(elem);   
-        }
-    };
 
     function setVerovioOptions() {
         verovioToolkit.value.setOptions(generateVerovioOptions());
