@@ -23,7 +23,7 @@ export function useVerovio(scoreData, options) {
     let renderCurrentPageTimeout = null;
 
     onMounted(() => {
-        verovio.module.onRuntimeInitialized = () => {
+        verovio.module.onRuntimeInitialized = async () => {
             verovioToolkit = new verovio.toolkit();
             setVerovioOptions();
             loadScoreFile();
