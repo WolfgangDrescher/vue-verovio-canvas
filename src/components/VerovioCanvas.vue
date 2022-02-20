@@ -5,7 +5,7 @@ const props = defineProps({
     scale: {
         type: Number,
         required: false,
-        default: 50,
+        default: 40,
         validator: value => {
             return value >= 1 && value <= 1000;
         },
