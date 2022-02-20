@@ -36,7 +36,7 @@ If you want to use pagination wrap the `<VerovioCanvas />` component in a
 container element with specific dimensions:
 
 ```
-<div style="width: 640px; height: 360px">
+<div style="width: 640px; height: 360px;">
     <VerovioCanvas url="/file.mei" view-mode="page" />
 </div>
 ```
