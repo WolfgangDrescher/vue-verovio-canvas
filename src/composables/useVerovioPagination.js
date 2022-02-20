@@ -1,6 +1,6 @@
 import { ref, readonly, watch } from 'vue';
 
-export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady) {
+export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady, isLoading) {
 
     const page = ref(1);
 
@@ -32,7 +32,7 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
     function renderCurrentPage() {
         if (verovioIsReady.value) {
             clearTimeout(renderCurrentPageTimeout);
-            // isLoading.value = true;
+            isLoading.value = true;
             renderCurrentPageTimeout = setTimeout(() => {
                 setRenderedScoreToPage(page.value);
             }, 100);
@@ -41,6 +41,7 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
 
     function setRenderedScoreToPage(page) {
         renderedScore.value = verovioToolkit.value.renderToSVG(page, {});
+        isLoading.value = false;
     };
 
     return {

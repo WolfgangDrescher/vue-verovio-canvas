@@ -19,12 +19,13 @@ export function useVerovio(options, templateRef) {
     } = options;
 
     const renderedScore = ref(null);
+    const isLoading = ref(true);
     const loadingMessage = ref(null)
     let verovioToolkit = ref(null);
     let verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
 
-    const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady);
+    const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady, isLoading);
     const { dimensions } = useVerovioResizeObserver(templateRef);
 
     loadingMessage.value = 'Initializing Verovio WebAssembly runtime';
@@ -69,6 +70,7 @@ export function useVerovio(options, templateRef) {
     function redoLayout() {
         if (verovioIsReady.value) {
             clearTimeout(redoLayoutTimeout);
+            isLoading.value = true;
             redoLayoutTimeout = setTimeout(() => {
                 setVerovioOptions();
                 verovioToolkit.value.redoLayout();
@@ -91,6 +93,7 @@ export function useVerovio(options, templateRef) {
     return {
         renderedScore: readonly(renderedScore),
         page: readonly(page),
+        isLoading: readonly(isLoading),
         loadingMessage: readonly(loadingMessage),
         dimensions: readonly(dimensions),
         nextPage,

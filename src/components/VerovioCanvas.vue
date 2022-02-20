@@ -64,6 +64,7 @@ const props = defineProps({
 const verovioCanvas = ref(null);
 
 const {
+    isLoading,
     renderedScore,
     loadingMessage,
     dimensions,
@@ -74,6 +75,7 @@ const {
 } = useVerovio(toRefs(props), verovioCanvas);
 
 defineExpose({
+    isLoading,
     dimensions,
     page,
     nextPage,
