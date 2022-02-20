@@ -3,6 +3,10 @@ import { ref, toRefs } from 'vue';
 import { useVerovio } from '../composables/useVerovio';
 
 const props = defineProps({
+    url: {
+        type: String,
+        required: true,
+    },
     scale: {
         type: Number,
         required: false,
