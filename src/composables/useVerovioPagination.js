@@ -7,22 +7,18 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
     let renderCurrentPageTimeout = null;
 
     watch(page, () => {
-        console.log('watch');
         renderCurrentPage();
     });
 
     function nextPage() {
-        console.log('nextPage');
         page.value = validate(page.value + 1);
     };
 
     function prevPage() {
-        console.log('prevPage');
         page.value = validate(page.value - 1);
     };
 
     function setPage(value) {
-        console.log('setPage', value);
         page.value = validate(value);
     }
 
