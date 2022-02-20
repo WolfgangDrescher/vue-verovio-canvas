@@ -18,7 +18,7 @@ const props = defineProps({
     viewMode: {
         type: String,
         required: false,
-        default: 'page',
+        default: 'vertical',
         validator: value => {
             return ['page', 'horizontal', 'vertical'].includes(value);
         },
