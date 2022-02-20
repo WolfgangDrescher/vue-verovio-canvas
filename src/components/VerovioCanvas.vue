@@ -23,7 +23,10 @@ const props = defineProps({
     viewMode: {
         type: String,
         required: false,
-        default: 'page', // page, horizontal, vertical
+        default: 'page',
+        validator: value => {
+            return ['page', 'horizontal', 'vertical'].includes(value);
+        },
     },
     pageMargin: {
         type: Number,
