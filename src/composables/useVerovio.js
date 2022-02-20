@@ -1,13 +1,11 @@
-import { ref, readonly, onMounted, watch } from 'vue';
+import { ref, readonly, onMounted, watch, reactive } from 'vue';
 import verovio from 'verovio';
 
-export function useVerovio(scoreData, options) {
+export function useVerovio(options, templateRef) {
 
     const {
         url,
         scale,
-        width,
-        height,
         viewMode,
         pageMargin,
         pageMarginTop,
@@ -17,12 +15,17 @@ export function useVerovio(scoreData, options) {
     } = options;
 
     const page = ref(1);
+    const dimensions = reactive({
+        width: null,
+        height: null,
+    });
     const renderedScore = ref(null);
     const loadingMessage = ref(null)
     let verovioToolkit = null;
     let verovioIsReady = false;
     let redoLayoutTimeout = null;
     let renderCurrentPageTimeout = null;
+    let resizeObserver = null;
 
     onMounted(() => {
         verovio.module.onRuntimeInitialized = async () => {
@@ -32,7 +35,7 @@ export function useVerovio(scoreData, options) {
         };
     });
 
-    watch([scale, width, height, viewMode], () => {
+    watch([scale, dimensions, viewMode], () => {
         redoLayout();
     });
 
@@ -40,9 +43,19 @@ export function useVerovio(scoreData, options) {
         renderCurrentPage();
     });
 
-    watch(viewMode, () => {
-        redoLayout();
+    watch(templateRef, elem => {
+        initResizeObserver(elem);
     });
+
+    function initResizeObserver(elem) {
+        dimensions.width = elem.clientWidth;
+        dimensions.height = elem.clientHeight;
+        resizeObserver = new ResizeObserver(([entry]) => {
+            dimensions.width = entry.target.clientWidth;
+            dimensions.height = entry.target.clientHeight;
+        });
+        resizeObserver.observe(elem);
+    };
 
     function setVerovioOptions() {
         verovioToolkit.setOptions(generateVerovioOptions());
@@ -53,8 +66,8 @@ export function useVerovio(scoreData, options) {
             scale: scale.value,
             header: 'none',
             footer: 'none',
-            pageWidth: Math.min(Math.max(width.value * (100 / scale.value), 100), 60000),
-            pageHeight: Math.min(Math.max(height.value * (100 / scale.value), 100), 60000),
+            pageWidth: Math.min(Math.max(dimensions.width * (100 / scale.value), 100), 60000),
+            pageHeight: Math.min(Math.max(dimensions.height * (100 / scale.value), 100), 60000),
             pageMarginTop: (pageMarginTop.value ? pageMarginTop.value : pageMargin.value) * (100 / scale.value),
             pageMarginRight: (pageMarginRight.value ? pageMarginRight.value : pageMargin.value) * (100 / scale.value),
             pageMarginBottom: (pageMarginBottom.value ? pageMarginBottom.value : pageMargin.value) * (100 / scale.value),
@@ -110,5 +123,6 @@ export function useVerovio(scoreData, options) {
         renderedScore: readonly(renderedScore),
         page: readonly(page),
         loadingMessage: readonly(loadingMessage),
+        dimensions: readonly(dimensions),
     };
 };
