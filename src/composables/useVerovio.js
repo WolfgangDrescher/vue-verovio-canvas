@@ -19,7 +19,8 @@ export function useVerovio(options, templateRef) {
 
     const renderedScore = ref(null);
     const isLoading = ref(true);
-    const loadingMessage = ref(null);
+    const isError = ref(false);
+    const message = ref(null);
     let verovioToolkit = ref(null);
     let verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
@@ -32,7 +33,7 @@ export function useVerovio(options, templateRef) {
     );
     const { dimensions } = useVerovioResizeObserver(templateRef);
 
-    loadingMessage.value = 'Initializing Verovio WebAssembly runtime';
+    message.value = 'Initializing Verovio WebAssembly runtime';
     verovio.module.onRuntimeInitialized = async () => {
         verovioToolkit.value = new verovio.toolkit();
         // emit('verovioToolkitRuntimeInitialized');
@@ -85,21 +86,31 @@ export function useVerovio(options, templateRef) {
     }
 
     async function loadScoreFile() {
-        loadingMessage.value = 'Fetching score file from server';
-        const response = await fetch(url.value);
-        const data = await response.text();
-        loadingMessage.value = 'Load score with verovio';
-        verovioToolkit.value.loadData(data);
-        verovioIsReady.value = true;
-        loadingMessage.value = 'Render current page with verovio';
-        setRenderedScoreToPage(page.value);
+        try {
+            message.value = 'Fetching score file from server';
+            const response = await fetch(url.value);
+            if (!response.ok) {
+                throw new Error(`${response.status} ${response.statusText}`);
+            }
+            const data = await response.text();
+            message.value = 'Load score with verovio';
+            // verovio wont throw on invlaid input files
+            verovioToolkit.value.loadData(data);
+            verovioIsReady.value = true;
+            message.value = 'Render current page with verovio';
+            setRenderedScoreToPage(page.value);
+        } catch (e) {
+            isError.value = true;
+            message.value = `Could not display score with verovio (${e.message})`;
+        }
     }
 
     return {
         renderedScore: readonly(renderedScore),
         page: readonly(page),
         isLoading: readonly(isLoading),
-        loadingMessage: readonly(loadingMessage),
+        isError: readonly(isError),
+        message: readonly(message),
         dimensions: readonly(dimensions),
         nextPage,
         prevPage,

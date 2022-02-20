@@ -63,7 +63,7 @@ const props = defineProps({
 
 const verovioCanvas = ref(null);
 
-const { isLoading, renderedScore, loadingMessage, dimensions, page, nextPage, prevPage, setPage } = useVerovio(
+const { isLoading, isError, renderedScore, message, dimensions, page, nextPage, prevPage, setPage } = useVerovio(
     toRefs(props),
     verovioCanvas
 );
@@ -81,8 +81,9 @@ defineExpose({
 <template>
     <div class="verovio-container">
         <div class="verovio-canvas" :class="`verovio-canvas-${viewMode}`" ref="verovioCanvas">
-            <div v-if="renderedScore === null" class="verovio-canvas-loading">
-                <Loading :message="loadingMessage" />
+            <div v-if="renderedScore === null" class="verovio-canvas-status" :class="{'verovio-canvas-status-error': isError}">
+                <Loading :message="message" v-if="!isError" />
+                <div v-else class="verovio-canvas-status-error-message" v-text="message"></div>
             </div>
             <div v-else class="verovio-canvas-stage" v-html="renderedScore"></div>
         </div>
@@ -90,6 +91,10 @@ defineExpose({
 </template>
 
 <style scoped>
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
 .verovio-container {
     display: flex;
     flex-direction: column;
@@ -115,9 +120,20 @@ defineExpose({
     flex-direction: column;
 }
 
-.verovio-canvas-loading {
+.verovio-canvas-status {
     width: 100%;
     height: 100%;
-    background-color: rgba(200, 200, 200, 0.5);
+    background-color: rgba(243, 244, 246, .8);
+    border-radius: 3px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.verovio-canvas-status-error {
+    background-color: rgba(254, 226, 226, .8);
+    border-color: #fecaca;
 }
 </style>
