@@ -48,6 +48,16 @@ const props = defineProps({
         required: false,
         default: 0,
     },
+    header: {
+        type: String,
+        required: false,
+        default: 'none',
+    },
+    footer: {
+        type: String,
+        required: false,
+        default: 'none',
+    },
 });
 
 const verovioCanvas = ref(null);

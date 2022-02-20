@@ -12,6 +12,8 @@ export function useVerovio(options, templateRef) {
         pageMarginRight,
         pageMarginBottom,
         pageMarginLeft,
+        header,
+        footer,
     } = options;
 
     const page = ref(1);
@@ -66,8 +68,8 @@ export function useVerovio(options, templateRef) {
     function generateVerovioOptions() {
         const options = {
             scale: scale.value,
-            header: 'none',
-            footer: 'none',
+            header: header.value,
+            footer: footer.value,
             pageWidth: Math.min(Math.max(dimensions.width * (100 / scale.value), 100), 60000),
             pageHeight: Math.min(Math.max(dimensions.height * (100 / scale.value), 100), 60000),
             pageMarginTop: (pageMarginTop.value ? pageMarginTop.value : pageMargin.value) * (100 / scale.value),
