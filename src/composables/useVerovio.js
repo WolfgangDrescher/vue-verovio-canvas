@@ -1,4 +1,4 @@
-import { ref, readonly, onMounted, watch, reactive } from 'vue';
+import { ref, readonly, watch } from 'vue';
 import verovio from 'verovio';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
@@ -27,13 +27,13 @@ export function useVerovio(options, templateRef) {
     const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady);
     const { dimensions } = useVerovioResizeObserver(templateRef);
 
-    onMounted(() => {
-        verovio.module.onRuntimeInitialized = async () => {
-            verovioToolkit.value = new verovio.toolkit();
-            setVerovioOptions();
-            loadScoreFile();
-        };
-    });
+    loadingMessage.value = 'Initializing Verovio WebAssembly runtime';
+    verovio.module.onRuntimeInitialized = async () => {
+        verovioToolkit.value = new verovio.toolkit();
+        // emit('verovioToolkitRuntimeInitialized');
+        setVerovioOptions();
+        loadScoreFile();
+    };
 
     watch([scale, dimensions, viewMode], () => {
         redoLayout();
