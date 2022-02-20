@@ -17,6 +17,7 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 | header           | `none`     | Control header layout (`none`, `auto`, `encoded`, `always`) |
 | footer           | `none`     | Control footer layout (`none`, `auto`, `encoded`)  |
 
+Use `verovio -h` in the CLI to check other options and values for verovio.
 
 ## Info
 
