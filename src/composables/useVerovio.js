@@ -3,6 +3,8 @@ import verovio from 'verovio';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 
+let verovioRuntimeInitialized = false;
+
 export function useVerovio(options, templateRef) {
     const {
         url,
@@ -24,6 +26,7 @@ export function useVerovio(options, templateRef) {
     const verovioToolkit = ref(null);
     const verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
+    let verovioRuntimeInterval = null;
 
     const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(
         verovioToolkit,
@@ -34,12 +37,23 @@ export function useVerovio(options, templateRef) {
     const { dimensions } = useVerovioResizeObserver(templateRef);
 
     message.value = 'Initializing Verovio WebAssembly runtime';
-    verovio.module.onRuntimeInitialized = async () => {
+
+    verovio.module.onRuntimeInitialized = onRuntimeInitializedEvent;
+
+    verovioRuntimeInterval = setInterval(() => {
+        if (verovioRuntimeInitialized) {
+            clearInterval(verovioRuntimeInterval);
+            onRuntimeInitializedEvent();
+        }
+    }, 50);
+
+    function onRuntimeInitializedEvent() {
+        verovioRuntimeInitialized = true;
         verovioToolkit.value = new verovio.toolkit();
         // emit('verovioToolkitRuntimeInitialized');
         setVerovioOptions();
         loadScoreFile();
-    };
+    }
 
     watch([scale, dimensions, viewMode], () => {
         redoLayout();
