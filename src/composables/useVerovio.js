@@ -4,6 +4,7 @@ import verovio from 'verovio';
 export function useVerovio(scoreData, options) {
 
     const {
+        url,
         scale,
         width,
         height,
@@ -17,6 +18,7 @@ export function useVerovio(scoreData, options) {
 
     const page = ref(1);
     const renderedScore = ref(null);
+    const loadingMessage = ref(null)
     let verovioToolkit = null;
     let verovioIsReady = false;
     let redoLayoutTimeout = null;
@@ -93,14 +95,20 @@ export function useVerovio(scoreData, options) {
         renderedScore.value = verovioToolkit.renderToSVG(page, {});
     };
 
-    function loadScoreFile() {
-        verovioToolkit.loadData(scoreData);
+    async function loadScoreFile() {
+        loadingMessage.value = 'Fetching score file from server';
+        const response = await fetch(url.value);
+        const data = await response.text();
+        loadingMessage.value = 'Load score with verovio';
+        verovioToolkit.loadData(data);
         verovioIsReady = true;
+        loadingMessage.value = 'Render current page with verovio';
         setRenderedScoreToPage(page.value);
     };
 
     return {
         renderedScore: readonly(renderedScore),
         page: readonly(page),
+        loadingMessage: readonly(loadingMessage),
     };
 };
