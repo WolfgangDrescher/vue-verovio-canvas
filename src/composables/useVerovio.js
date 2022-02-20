@@ -21,8 +21,8 @@ export function useVerovio(options, templateRef) {
     const isLoading = ref(true);
     const isError = ref(false);
     const message = ref(null);
-    let verovioToolkit = ref(null);
-    let verovioIsReady = ref(false);
+    const verovioToolkit = ref(null);
+    const verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
 
     const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(
