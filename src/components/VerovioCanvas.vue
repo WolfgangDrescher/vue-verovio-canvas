@@ -81,7 +81,11 @@ defineExpose({
 <template>
     <div class="verovio-container">
         <div class="verovio-canvas" :class="`verovio-canvas-${viewMode}`" ref="verovioCanvas">
-            <div v-if="renderedScore === null" class="verovio-canvas-status" :class="{'verovio-canvas-status-error': isError}">
+            <div
+                v-if="renderedScore === null"
+                class="verovio-canvas-status"
+                :class="{ 'verovio-canvas-status-error': isError }"
+            >
                 <Loading :message="message" v-if="!isError" />
                 <div v-else class="verovio-canvas-status-error-message" v-text="message"></div>
             </div>
@@ -91,7 +95,9 @@ defineExpose({
 </template>
 
 <style scoped>
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: border-box;
 }
 
@@ -123,7 +129,7 @@ defineExpose({
 .verovio-canvas-status {
     width: 100%;
     height: 100%;
-    background-color: rgba(243, 244, 246, .8);
+    background-color: rgba(243, 244, 246, 0.8);
     border-radius: 3px;
     border: 1px solid #e5e7eb;
     display: flex;
@@ -133,7 +139,7 @@ defineExpose({
 }
 
 .verovio-canvas-status-error {
-    background-color: rgba(254, 226, 226, .8);
+    background-color: rgba(254, 226, 226, 0.8);
     border-color: #fecaca;
 }
 </style>
