@@ -15,16 +15,6 @@ const props = defineProps({
             return value >= 1 && value <= 1000;
         },
     },
-    width: {
-        type: Number,
-        required: false,
-        default: 640,
-    },
-    height: {
-        type: Number,
-        required: false,
-        default: 360,
-    },
     viewMode: {
         type: String,
         required: false,
