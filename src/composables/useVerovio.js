@@ -66,10 +66,10 @@ export function useVerovio(scoreData, options) {
             pageMarginBottom: (pageMarginBottom.value ? pageMarginBottom.value : pageMargin.value) * (100 / scale.value),
             pageMarginLeft: (pageMarginLeft.value ? pageMarginLeft.value : pageMargin.value) * (100 / scale.value),
         };
-        if (viewMode === 'vertical') {
+        if (viewMode.value === 'vertical') {
             options.adjustPageHeight = true;
             options.pageHeight = 60000;
-        } else if (viewMode === 'horizontal') {
+        } else if (viewMode.value === 'horizontal') {
             options.adjustPageHeight = true;
             options.breaks = 'none';
             options.pageWidth = 60000;
