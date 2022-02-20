@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, toRefs } from 'vue';
+import { useVerovio } from '../composables/useVerovio';
 
 const props = defineProps({
     scale: {
@@ -55,6 +56,8 @@ const props = defineProps({
     },
 });
 
+const { renderedScore, loadingMessage } = useVerovio(toRefs(props));
+
 const style = ref({
     width: props.width === 0 ? '100%'  : `${parseInt(props.width, 10)}px`,
     backgroundColor: 'grey',
@@ -63,7 +66,10 @@ const style = ref({
 </script>
 
 <template>
-  <div class="verovio-canvas" :style="style">
-    <pre>{{ style }}</pre>
-  </div>
+    <div class="verovio-canvas" :style="style">
+        <div v-if="renderedScore === null" class="verovio-canvas-loading">
+            {{ loadingMessage }}
+        </div>
+        <div v-else class="verovio-canvas-stage" ref="verovioCanvasStage" v-html="renderedScore"></div>
+    </div>
 </template>
