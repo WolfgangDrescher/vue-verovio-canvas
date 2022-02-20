@@ -30,15 +30,7 @@ export function useVerovio(scoreData, options) {
         };
     });
 
-    watch(width, () => {
-        redoLayout();
-    });
-
-    watch(height, () => {
-        redoLayout();
-    });
-
-    watch(scale, () => {
+    watch([scale, width, height, viewMode], () => {
         redoLayout();
     });
 
