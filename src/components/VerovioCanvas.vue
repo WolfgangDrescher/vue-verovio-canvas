@@ -60,8 +60,9 @@ const props = defineProps({
     },
 });
 
-const { renderedScore, loadingMessage } = useVerovio(toRefs(props));
+const verovioCanvas = ref(null);
 
+const { renderedScore, loadingMessage } = useVerovio(toRefs(props), verovioCanvas);
 
 </script>
 
