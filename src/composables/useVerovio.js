@@ -20,7 +20,7 @@ export function useVerovio(options, templateRef) {
 
     const renderedScore = ref(null);
     const isLoading = ref(true);
-    const loadingMessage = ref(null)
+    const loadingMessage = ref(null);
     let verovioToolkit = ref(null);
     let verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
@@ -42,7 +42,7 @@ export function useVerovio(options, templateRef) {
 
     function setVerovioOptions() {
         verovioToolkit.value.setOptions(generateVerovioOptions());
-    };
+    }
 
     function generateVerovioOptions() {
         const options = {
@@ -65,7 +65,7 @@ export function useVerovio(options, templateRef) {
             options.pageWidth = 60000;
         }
         return options;
-    };
+    }
 
     function redoLayout() {
         if (verovioIsReady.value) {
@@ -77,7 +77,7 @@ export function useVerovio(options, templateRef) {
                 setRenderedScoreToPage(page.value);
             }, 100);
         }
-    };
+    }
 
     async function loadScoreFile() {
         loadingMessage.value = 'Fetching score file from server';
@@ -88,7 +88,7 @@ export function useVerovio(options, templateRef) {
         verovioIsReady.value = true;
         loadingMessage.value = 'Render current page with verovio';
         setRenderedScoreToPage(page.value);
-    };
+    }
 
     return {
         renderedScore: readonly(renderedScore),
@@ -100,4 +100,4 @@ export function useVerovio(options, templateRef) {
         prevPage,
         setPage,
     };
-};
+}

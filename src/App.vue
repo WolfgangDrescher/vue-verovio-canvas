@@ -1,5 +1,5 @@
 <script setup>
-import VerovioCanvas from "./components/VerovioCanvas.vue";
+import VerovioCanvas from './components/VerovioCanvas.vue';
 </script>
 
 <template>

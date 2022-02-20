@@ -23,9 +23,9 @@ export function useVerovioResizeObserver(templateRef) {
             });
             resizeObserver.observe(elem);
         }
-    };
+    }
 
     return {
         dimensions: readonly(dimensions),
     };
-};
+}

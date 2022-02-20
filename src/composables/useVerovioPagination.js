@@ -12,11 +12,11 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
 
     function nextPage() {
         page.value = validate(page.value + 1);
-    };
+    }
 
     function prevPage() {
         page.value = validate(page.value - 1);
-    };
+    }
 
     function setPage(value) {
         page.value = validate(value);
@@ -27,7 +27,7 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
             throw new Error(`Page must be an integer, "${value}" given.`);
         }
         return Math.min(Math.max(value, 1), verovioToolkit.value.getPageCount());
-    };
+    }
 
     function renderCurrentPage() {
         if (verovioIsReady.value) {
@@ -37,12 +37,12 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
                 setRenderedScoreToPage(page.value);
             }, 100);
         }
-    };
+    }
 
     function setRenderedScoreToPage(page) {
         renderedScore.value = verovioToolkit.value.renderToSVG(page, {});
         isLoading.value = false;
-    };
+    }
 
     return {
         page: readonly(page),
@@ -51,4 +51,4 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
         setPage,
         setRenderedScoreToPage,
     };
-};
+}
