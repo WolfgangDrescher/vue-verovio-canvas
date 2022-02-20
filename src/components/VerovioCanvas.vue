@@ -1,6 +1,7 @@
 <script setup>
 import { ref, toRefs } from 'vue';
 import { useVerovio } from '../composables/useVerovio';
+import Loading from './Loading.vue';
 
 const props = defineProps({
     url: {
@@ -71,7 +72,7 @@ const { renderedScore, loadingMessage } = useVerovio(toRefs(props), verovioCanva
     <div class="verovio-container">
         <div class="verovio-canvas" :class="`verovio-canvas-${viewMode}`" ref="verovioCanvas">
             <div v-if="renderedScore === null" class="verovio-canvas-loading">
-                {{ loadingMessage }}
+                <Loading :message="loadingMessage" />
             </div>
             <div v-else class="verovio-canvas-stage" v-html="renderedScore"></div>
         </div>
