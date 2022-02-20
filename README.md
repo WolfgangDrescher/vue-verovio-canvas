@@ -9,7 +9,7 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 | url              | –            | URL of the score file to display                   |
 | scale            | 40           | Scale of the output in percent (min: 1; max: 1000) |
 | viewMode         | `horizontal` | `page`, `horizontal`, `vertical`                   |
-| pageMargin       | 0            | Change all page margins at once                    |
+| pageMargin       | 0            | Change all page margins at once and fallback value for top, right, left and bottom page margins are not set                    |
 | pageMarginTop    | 0            | Set page margin top                                |
 | pageMarginRight  | 0            | Set page margin right                              |
 | pageMarginBottom | 0            | Set page margin bottom                             |
