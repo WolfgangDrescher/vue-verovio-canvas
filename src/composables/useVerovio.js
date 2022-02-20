@@ -1,5 +1,6 @@
 import { ref, readonly, onMounted, watch, reactive } from 'vue';
 import verovio from 'verovio';
+import { useVerovioPagination } from './useVerovioPagination';
 
 export function useVerovio(options, templateRef) {
 
@@ -16,22 +17,22 @@ export function useVerovio(options, templateRef) {
         footer,
     } = options;
 
-    const page = ref(1);
     const dimensions = reactive({
         width: null,
         height: null,
     });
     const renderedScore = ref(null);
     const loadingMessage = ref(null)
-    let verovioToolkit = null;
-    let verovioIsReady = false;
+    let verovioToolkit = ref(null);
+    let verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
-    let renderCurrentPageTimeout = null;
     let resizeObserver = null;
+
+    const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady);
 
     onMounted(() => {
         verovio.module.onRuntimeInitialized = async () => {
-            verovioToolkit = new verovio.toolkit();
+            verovioToolkit.value = new verovio.toolkit();
             setVerovioOptions();
             loadScoreFile();
         };
@@ -39,10 +40,6 @@ export function useVerovio(options, templateRef) {
 
     watch([scale, dimensions, viewMode], () => {
         redoLayout();
-    });
-
-    watch(page, () => {
-        renderCurrentPage();
     });
 
     watch(templateRef, elem => {
@@ -62,7 +59,7 @@ export function useVerovio(options, templateRef) {
     };
 
     function setVerovioOptions() {
-        verovioToolkit.setOptions(generateVerovioOptions());
+        verovioToolkit.value.setOptions(generateVerovioOptions());
     };
 
     function generateVerovioOptions() {
@@ -89,27 +86,14 @@ export function useVerovio(options, templateRef) {
     };
 
     function redoLayout() {
-        if (verovioIsReady) {
+        if (verovioIsReady.value) {
             clearTimeout(redoLayoutTimeout);
             redoLayoutTimeout = setTimeout(() => {
                 setVerovioOptions();
-                verovioToolkit.redoLayout();
+                verovioToolkit.value.redoLayout();
                 setRenderedScoreToPage(page.value);
             }, 100);
         }
-    };
-
-    function renderCurrentPage() {
-        if (verovioIsReady) {
-            clearTimeout(renderCurrentPageTimeout);
-            renderCurrentPageTimeout = setTimeout(() => {
-                setRenderedScoreToPage(page.value);
-            }, 100);
-        }
-    };
-
-    function setRenderedScoreToPage(page) {
-        renderedScore.value = verovioToolkit.renderToSVG(page, {});
     };
 
     async function loadScoreFile() {
@@ -117,8 +101,8 @@ export function useVerovio(options, templateRef) {
         const response = await fetch(url.value);
         const data = await response.text();
         loadingMessage.value = 'Load score with verovio';
-        verovioToolkit.loadData(data);
-        verovioIsReady = true;
+        verovioToolkit.value.loadData(data);
+        verovioIsReady.value = true;
         loadingMessage.value = 'Render current page with verovio';
         setRenderedScoreToPage(page.value);
     };
@@ -128,5 +112,8 @@ export function useVerovio(options, templateRef) {
         page: readonly(page),
         loadingMessage: readonly(loadingMessage),
         dimensions: readonly(dimensions),
+        nextPage,
+        prevPage,
+        setPage,
     };
 };
