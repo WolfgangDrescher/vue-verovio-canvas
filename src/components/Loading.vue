@@ -1,7 +1,7 @@
 <script setup>
 import LoadingSpinner from './LoadingSpinner.vue';
 
-const props = defineProps({
+defineProps({
     message: {
         type: String,
         default: 'Loading…',
