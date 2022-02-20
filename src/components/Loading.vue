@@ -25,7 +25,9 @@ defineProps({
     <div class="loading-component">
         <div class="loading-component-inner">
             <LoadingSpinner :size="spinnerSize" :stroke="spinnerColor" />
-            <div v-if="showMessage" class="loading-component-message">{{ message }}</div>
+            <div v-if="showMessage" class="loading-component-message">
+                {{ message }}
+            </div>
         </div>
     </div>
 </template>
@@ -45,6 +47,6 @@ defineProps({
 
 .loading-component-message {
     text-align: center;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
 }
 </style>

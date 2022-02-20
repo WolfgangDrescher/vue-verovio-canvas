@@ -1,7 +1,6 @@
 import { ref, readonly, watch } from 'vue';
 
 export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady, isLoading) {
-
     const page = ref(1);
 
     let renderCurrentPageTimeout = null;

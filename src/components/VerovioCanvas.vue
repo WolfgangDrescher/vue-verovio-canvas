@@ -12,7 +12,7 @@ const props = defineProps({
         type: Number,
         required: false,
         default: 40,
-        validator: value => {
+        validator: (value) => {
             return value >= 1 && value <= 1000;
         },
     },
@@ -20,7 +20,7 @@ const props = defineProps({
         type: String,
         required: false,
         default: 'vertical',
-        validator: value => {
+        validator: (value) => {
             return ['page', 'horizontal', 'vertical'].includes(value);
         },
     },
@@ -63,16 +63,10 @@ const props = defineProps({
 
 const verovioCanvas = ref(null);
 
-const {
-    isLoading,
-    renderedScore,
-    loadingMessage,
-    dimensions,
-    page,
-    nextPage,
-    prevPage,
-    setPage,
-} = useVerovio(toRefs(props), verovioCanvas);
+const { isLoading, renderedScore, loadingMessage, dimensions, page, nextPage, prevPage, setPage } = useVerovio(
+    toRefs(props),
+    verovioCanvas
+);
 
 defineExpose({
     isLoading,
@@ -82,7 +76,6 @@ defineExpose({
     prevPage,
     setPage,
 });
-
 </script>
 
 <template>
@@ -125,6 +118,6 @@ defineExpose({
 .verovio-canvas-loading {
     width: 100%;
     height: 100%;
-    background-color: rgba(200,200,200,.5);
+    background-color: rgba(200, 200, 200, 0.5);
 }
 </style>

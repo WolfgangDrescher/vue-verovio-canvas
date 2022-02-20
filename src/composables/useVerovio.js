@@ -4,7 +4,6 @@ import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 
 export function useVerovio(options, templateRef) {
-
     const {
         url,
         scale,
@@ -25,7 +24,12 @@ export function useVerovio(options, templateRef) {
     let verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
 
-    const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(verovioToolkit, renderedScore, verovioIsReady, isLoading);
+    const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(
+        verovioToolkit,
+        renderedScore,
+        verovioIsReady,
+        isLoading
+    );
     const { dimensions } = useVerovioResizeObserver(templateRef);
 
     loadingMessage.value = 'Initializing Verovio WebAssembly runtime';
@@ -53,7 +57,8 @@ export function useVerovio(options, templateRef) {
             pageHeight: Math.min(Math.max(dimensions.height * (100 / scale.value), 100), 60000),
             pageMarginTop: (pageMarginTop.value ? pageMarginTop.value : pageMargin.value) * (100 / scale.value),
             pageMarginRight: (pageMarginRight.value ? pageMarginRight.value : pageMargin.value) * (100 / scale.value),
-            pageMarginBottom: (pageMarginBottom.value ? pageMarginBottom.value : pageMargin.value) * (100 / scale.value),
+            pageMarginBottom:
+                (pageMarginBottom.value ? pageMarginBottom.value : pageMargin.value) * (100 / scale.value),
             pageMarginLeft: (pageMarginLeft.value ? pageMarginLeft.value : pageMargin.value) * (100 / scale.value),
         };
         if (viewMode.value === 'vertical') {
