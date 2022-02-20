@@ -4,8 +4,8 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 
 ## Props
 
-| Prop             | Default      | Description                                        |
-|------------------|--------------|----------------------------------------------------|
+| Prop             | Default      | Description                                      |
+|------------------|--------------|--------------------------------------------------|
 | url              | –          | URL of the score file to display                   |
 | scale            | 40         | Scale of the output in percent (min: 1; max: 1000) |
 | viewMode         | `vertical` | `page`, `horizontal`, `vertical`                   |
@@ -14,6 +14,8 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 | pageMarginRight  | 0          | Set page margin right                              |
 | pageMarginBottom | 0          | Set page margin bottom                             |
 | pageMarginLeft   | 0          | Set page margin left                               |
+| header           | `none`     | Control header layout (`none`, `auto`, `encoded`, `always`) |
+| footer           | `none`     | Control footer layout (`none`, `auto`, `encoded`)  |
 
 
 ## Info
