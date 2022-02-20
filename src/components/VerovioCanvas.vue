@@ -73,6 +73,14 @@ const {
     setPage,
 } = useVerovio(toRefs(props), verovioCanvas);
 
+defineExpose({
+    dimensions,
+    page,
+    nextPage,
+    prevPage,
+    setPage,
+});
+
 </script>
 
 <template>
