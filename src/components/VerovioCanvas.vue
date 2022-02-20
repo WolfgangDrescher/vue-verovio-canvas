@@ -84,7 +84,6 @@ defineExpose({
 </script>
 
 <template>
-    {{ dimensions }}
     <div class="verovio-container">
         <div class="verovio-canvas" :class="`verovio-canvas-${viewMode}`" ref="verovioCanvas">
             <div v-if="renderedScore === null" class="verovio-canvas-loading">
