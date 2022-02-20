@@ -58,18 +58,45 @@ const props = defineProps({
 
 const { renderedScore, loadingMessage } = useVerovio(toRefs(props));
 
-const style = ref({
-    width: props.width === 0 ? '100%'  : `${parseInt(props.width, 10)}px`,
-    backgroundColor: 'grey',
-});
 
 </script>
 
 <template>
-    <div class="verovio-canvas" :style="style">
-        <div v-if="renderedScore === null" class="verovio-canvas-loading">
-            {{ loadingMessage }}
+    {{ dimensions }}
+    <div class="verovio-container">
+        <div class="verovio-canvas" :class="`verovio-canvas-${viewMode}`" ref="verovioCanvas">
+            <div v-if="renderedScore === null" class="verovio-canvas-loading">
+                {{ loadingMessage }}
+            </div>
+            <div v-else class="verovio-canvas-stage" v-html="renderedScore"></div>
         </div>
-        <div v-else class="verovio-canvas-stage" ref="verovioCanvasStage" v-html="renderedScore"></div>
     </div>
 </template>
+
+<style scoped>
+.verovio-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: gray;
+}
+.verovio-canvas {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.verovio-canvas-vertical {
+    overflow-x: auto;
+}
+
+.verovio-canvas-horizontal {
+    overflow-y: auto;
+}
+
+.verovio-canvas-stage {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+</style>
