@@ -1,35 +1,45 @@
 # vue-verovio-canvas
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue 3 component to display music scores with verovio.
 
-## Recommended IDE Setup
+## Props
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+| Prop             | Default      | Description                                        |
+|------------------|--------------|----------------------------------------------------|
+| url              | –            | URL of the score file to display                   |
+| scale            | 40           | Scale of the output in percent (min: 1; max: 1000) |
+| viewMode         | `horizontal` | `page`, `horizontal`, `vertical`                   |
+| pageMargin       | 0            | Change all page margins at once                    |
+| pageMarginTop    | 0            | Set page margin top                                |
+| pageMarginRight  | 0            | Set page margin right                              |
+| pageMarginBottom | 0            | Set page margin bottom                             |
+| pageMarginLeft   | 0            | Set page margin left                               |
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Info
 
-## Project Setup
+If you want to display the whole score at once with the available width of the
+parent container element and the hight of the score adjusted to the required
+height use the `vertical` view mode:
 
-```sh
-npm install
+```
+<VerovioCanvas url="/file.mei" view-mode="vertical" />
 ```
 
-### Compile and Hot-Reload for Development
+Or use the `horizontal` view mode to make the score scrollable on the x-axis:
 
-```sh
-npm run dev
+```
+<VerovioCanvas url="/file.mei" view-mode="horizontal" />
 ```
 
-### Compile and Minify for Production
+If you want to use pagination wrap the `<VerovioCanvas />` component in a
+container element with specific dimensions:
 
-```sh
-npm run build
+```
+<div style="width: 640px; height: 360px">
+    <VerovioCanvas url="/file.mei" view-mode="page" />
+</div>
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+You can also use the wrapper element with specific dimensions if you want to use
+`vertical` view mode but with scrollable on the y-axis.
