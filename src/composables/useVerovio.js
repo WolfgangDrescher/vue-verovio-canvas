@@ -48,13 +48,15 @@ export function useVerovio(options, templateRef) {
     });
 
     function initResizeObserver(elem) {
-        dimensions.width = elem.clientWidth;
-        dimensions.height = elem.clientHeight;
-        resizeObserver = new ResizeObserver(([entry]) => {
-            dimensions.width = entry.target.clientWidth;
-            dimensions.height = entry.target.clientHeight;
-        });
-        resizeObserver.observe(elem);
+        if(elem) {
+            dimensions.width = elem.clientWidth;
+            dimensions.height = elem.clientHeight;
+            resizeObserver = new ResizeObserver(([entry]) => {
+                dimensions.width = entry.target.clientWidth;
+                dimensions.height = entry.target.clientHeight;
+            });
+            resizeObserver.observe(elem);   
+        }
     };
 
     function setVerovioOptions() {
