@@ -1,6 +1,6 @@
 # vue-verovio-canvas
 
-A Vue 3 component to display music scores with verovio.
+A Vue 3 component to display music scores with [Verovio](https://www.verovio.org/index.xhtml).
 
 ## Props
 
