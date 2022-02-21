@@ -116,6 +116,7 @@ export function useVerovio(options, templateRef) {
         } catch (e) {
             isError.value = true;
             message.value = `Could not display score with verovio (${e.message})`;
+            console.error(e);
         }
     }
 
