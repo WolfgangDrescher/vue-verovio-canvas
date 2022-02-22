@@ -17,6 +17,7 @@ export function useVerovio(options, templateRef) {
         pageMarginLeft,
         header,
         footer,
+        spacingSystem,
     } = options;
 
     const renderedScore = ref(null);
@@ -65,6 +66,7 @@ export function useVerovio(options, templateRef) {
 
     function generateVerovioOptions() {
         const options = {
+            spacingSystem: spacingSystem.value,
             scale: scale.value,
             header: header.value,
             footer: footer.value,

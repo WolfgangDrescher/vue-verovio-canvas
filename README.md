@@ -16,6 +16,7 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 | pageMarginLeft   | 0          | Set page margin left                               |
 | header           | `none`     | Control header layout (`none`, `auto`, `encoded`, `always`) |
 | footer           | `none`     | Control footer layout (`none`, `auto`, `encoded`)  |
+| spacingSystem    | 12         | The system minimal spacing in MEI units (min: 0; max: 48) |
 
 Use `verovio -h` in the CLI to check other options and values for verovio.
 

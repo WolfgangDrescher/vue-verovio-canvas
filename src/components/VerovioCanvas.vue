@@ -59,6 +59,11 @@ const props = defineProps({
         required: false,
         default: 'none',
     },
+    spacingSystem: {
+        type: Number,
+        required: false,
+        default: 12,
+    },
 });
 
 const verovioCanvas = ref(null);
