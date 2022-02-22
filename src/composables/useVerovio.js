@@ -108,13 +108,15 @@ export function useVerovio(options, templateRef) {
 
     async function loadScoreFile() {
         try {
-            const data = await getData();
-            message.value = 'Load score with verovio';
-            // verovio wont throw on invlaid input files
-            verovioToolkit.value.loadData(data);
-            verovioIsReady.value = true;
-            message.value = 'Render current page with verovio';
-            setRenderedScoreToPage(page.value);
+            if(verovioRuntimeInitialized) {
+                const data = await getData();
+                message.value = 'Load score with verovio';
+                // verovio wont throw on invlaid input files
+                verovioToolkit.value.loadData(data);
+                verovioIsReady.value = true;
+                message.value = 'Render current page with verovio';
+                setRenderedScoreToPage(page.value);
+            }
         } catch (e) {
             isError.value = true;
             message.value = `Cannot display score with verovio (${e.message})`;
