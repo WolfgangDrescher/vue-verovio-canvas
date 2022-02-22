@@ -6,7 +6,13 @@ import Loading from './Loading.vue';
 const props = defineProps({
     url: {
         type: String,
-        required: true,
+        required: false,
+        default: null,
+    },
+    data: {
+        type: String,
+        required: false,
+        default: null,
     },
     scale: {
         type: Number,

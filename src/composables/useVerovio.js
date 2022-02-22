@@ -8,6 +8,7 @@ let verovioRuntimeInitialized = false;
 export function useVerovio(options, templateRef) {
     const {
         url,
+        data,
         scale,
         viewMode,
         pageMargin,
@@ -103,12 +104,7 @@ export function useVerovio(options, templateRef) {
 
     async function loadScoreFile() {
         try {
-            message.value = 'Fetching score file from server';
-            const response = await fetch(url.value);
-            if (!response.ok) {
-                throw new Error(`${response.status} ${response.statusText}`);
-            }
-            const data = await response.text();
+            const data = await getData();
             message.value = 'Load score with verovio';
             // verovio wont throw on invlaid input files
             verovioToolkit.value.loadData(data);
@@ -120,6 +116,20 @@ export function useVerovio(options, templateRef) {
             message.value = `Could not display score with verovio (${e.message})`;
             console.error(e);
         }
+    }
+
+    async function getData() {
+        if (data.value) {
+            return data.value;
+        } else if(url.value) {
+            message.value = 'Fetching score file from server';
+            const response = await fetch(url.value);
+            if (!response.ok) {
+                throw new Error(`${response.status} ${response.statusText}`);
+            }
+            const data = await response.text();
+        }
+        throw new Error('Input missing: pass url or data prop');
     }
 
     return {
