@@ -1,4 +1,3 @@
-import { createApp } from 'vue';
-import App from './App.vue';
+import VerovioCanvas from './components/VerovioCanvas.vue';
 
-createApp(App).mount('#app');
+export default VerovioCanvas;
