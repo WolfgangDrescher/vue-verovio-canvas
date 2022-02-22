@@ -1,5 +1,5 @@
 import { ref, readonly, watch } from 'vue';
-import verovio from 'verovio';
+import verovio from 'verovio-humdrum';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 
