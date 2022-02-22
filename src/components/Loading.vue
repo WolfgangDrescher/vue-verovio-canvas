@@ -24,7 +24,9 @@ defineProps({
 <template>
     <div class="loading-component">
         <div class="loading-component-inner">
-            <LoadingSpinner :size="spinnerSize" :stroke="spinnerColor" />
+            <div class="loading-component-spinner">
+                <LoadingSpinner :size="spinnerSize" :stroke="spinnerColor" />
+            </div>
             <div v-if="showMessage" class="loading-component-message">
                 {{ message }}
             </div>
@@ -41,8 +43,10 @@ defineProps({
     align-items: center;
 }
 
-.loading-component-inner {
-    text-align: center;
+.loading-component-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .loading-component-message {
