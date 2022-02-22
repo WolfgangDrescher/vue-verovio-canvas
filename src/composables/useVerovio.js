@@ -117,7 +117,7 @@ export function useVerovio(options, templateRef) {
             setRenderedScoreToPage(page.value);
         } catch (e) {
             isError.value = true;
-            message.value = `Could not display score with verovio (${e.message})`;
+            message.value = `Cannot display score with verovio (${e.message})`;
             console.error(e);
         }
     }
