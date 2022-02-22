@@ -61,6 +61,10 @@ export function useVerovio(options, templateRef) {
         redoLayout();
     });
 
+    watch(data, () => {
+        loadScoreFile();
+    });
+
     function setVerovioOptions() {
         verovioToolkit.value.setOptions(generateVerovioOptions());
     }
