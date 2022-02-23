@@ -13,7 +13,7 @@ export function useVerovioResizeObserver(templateRef) {
     });
 
     function initResizeObserver(elem) {
-        if (elem) {
+        if (elem instanceof HTMLElement) {
             dimensions.width = elem.clientWidth;
             dimensions.height = elem.clientHeight;
             resizeObserver = new ResizeObserver(([entry]) => {
