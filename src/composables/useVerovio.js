@@ -53,7 +53,6 @@ export function useVerovio(options, templateRef) {
         if(verovioToolkit.value === null) {
             verovioRuntimeInitialized = true;
             verovioToolkit.value = new verovio.toolkit();
-            // emit('verovioToolkitRuntimeInitialized');
             setVerovioOptions();
             loadScoreFile();
         }
