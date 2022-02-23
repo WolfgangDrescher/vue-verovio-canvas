@@ -71,7 +71,6 @@ export function useVerovio(options, templateRef) {
 
     function generateVerovioOptions() {
         const options = {
-            spacingSystem: spacingSystem.value,
             scale: scale.value,
             header: header.value,
             footer: footer.value,
@@ -82,6 +81,7 @@ export function useVerovio(options, templateRef) {
             pageMarginBottom:
                 (pageMarginBottom.value ? pageMarginBottom.value : pageMargin.value) * (100 / scale.value),
             pageMarginLeft: (pageMarginLeft.value ? pageMarginLeft.value : pageMargin.value) * (100 / scale.value),
+            spacingSystem: Math.min(Math.max(spacingSystem.value, 0), 48),
         };
         if (viewMode.value === 'vertical') {
             options.adjustPageHeight = true;
