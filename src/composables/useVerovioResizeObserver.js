@@ -1,4 +1,4 @@
-import { reactive, readonly, watch } from 'vue';
+import { reactive, readonly, onMounted } from 'vue';
 
 export function useVerovioResizeObserver(templateRef) {
     const dimensions = reactive({
@@ -8,8 +8,8 @@ export function useVerovioResizeObserver(templateRef) {
 
     let resizeObserver = null;
 
-    watch(templateRef, (elem) => {
-        initResizeObserver(elem);
+    onMounted(() => {
+        initResizeObserver(templateRef.value);
     });
 
     function initResizeObserver(elem) {
