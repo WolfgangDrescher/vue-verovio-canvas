@@ -133,7 +133,7 @@ export function useVerovio(options, templateRef) {
             if (!response.ok) {
                 throw new Error(`${response.status} ${response.statusText}`);
             }
-            const data = await response.text();
+            return await response.text();
         }
         throw new Error('Input missing: pass url or data prop');
     }
