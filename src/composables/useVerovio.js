@@ -50,11 +50,13 @@ export function useVerovio(options, templateRef) {
     }, 50);
 
     function onRuntimeInitializedEvent() {
-        verovioRuntimeInitialized = true;
-        verovioToolkit.value = new verovio.toolkit();
-        // emit('verovioToolkitRuntimeInitialized');
-        setVerovioOptions();
-        loadScoreFile();
+        if(verovioToolkit.value === null) {
+            verovioRuntimeInitialized = true;
+            verovioToolkit.value = new verovio.toolkit();
+            // emit('verovioToolkitRuntimeInitialized');
+            setVerovioOptions();
+            loadScoreFile();
+        }
     }
 
     watch([scale, dimensions, viewMode], () => {
