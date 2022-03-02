@@ -11,7 +11,7 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 | scale      | 40         | Scale of the output in percent (min: 1; max: 1000) and fallback value for `options.scale`                   |
 | viewMode   | `vertical` | `page`, `horizontal`, `vertical`                                                                            |
 | pageMargin | 0          | Change all page margins at once and fallback value when top, right, left or bottom page margins are not set |
-| options    | `[object]` | Pass options to verovio; Use `verovio -h` in the CLI to check all options and values                        |
+| options    | –          | Pass options to verovio; Use `verovio -h` in the CLI to check all options and values                        |
 
 ## Info
 
