@@ -4,21 +4,14 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 
 ## Props
 
-| Prop             | Default      | Description                                      |
-|------------------|--------------|--------------------------------------------------|
-| url              | –          | URL of the score file to display                   |
-| scale            | 40         | Scale of the output in percent (min: 1; max: 1000) |
-| viewMode         | `vertical` | `page`, `horizontal`, `vertical`                   |
-| pageMargin       | 0          | Change all page margins at once and fallback value for top, right, left and bottom page margins are not set                    |
-| pageMarginTop    | 0          | Set page margin top                                |
-| pageMarginRight  | 0          | Set page margin right                              |
-| pageMarginBottom | 0          | Set page margin bottom                             |
-| pageMarginLeft   | 0          | Set page margin left                               |
-| header           | `none`     | Control header layout (`none`, `auto`, `encoded`, `always`) |
-| footer           | `none`     | Control footer layout (`none`, `auto`, `encoded`)  |
-| spacingSystem    | 12         | The system minimal spacing in MEI units (min: 0; max: 48) |
-
-Use `verovio -h` in the CLI to check other options and values for verovio.
+| Prop       | Default    | Description                                                                                                 |
+|------------|------------|-------------------------------------------------------------------------------------------------------------|
+| url        | –          | URL of the score file to display                                                                            |
+| data       | –          | URL of the score file to display                                                                            |
+| scale      | 40         | Scale of the output in percent (min: 1; max: 1000) and fallback value for `options.scale`                   |
+| viewMode   | `vertical` | `page`, `horizontal`, `vertical`                                                                            |
+| pageMargin | 0          | Change all page margins at once and fallback value when top, right, left or bottom page margins are not set |
+| options    | `[object]` | Pass options to verovio; Use `verovio -h` in the CLI to check all options and values                        |
 
 ## Info
 

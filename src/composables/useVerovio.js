@@ -5,21 +5,25 @@ import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 
 let verovioRuntimeInitialized = false;
 
-export function useVerovio(options, templateRef) {
+const defaultOptions = {
+    scale: 40,
+    pageMarginTop: 0,
+    pageMarginRight: 0,
+    pageMarginBottom: 0,
+    pageMarginLeft: 0,
+    header: 'none',
+    footer: 'none',
+};
+
+export function useVerovio(props, templateRef) {
     const {
         url,
         data,
         scale,
         viewMode,
         pageMargin,
-        pageMarginTop,
-        pageMarginRight,
-        pageMarginBottom,
-        pageMarginLeft,
-        header,
-        footer,
-        spacingSystem,
-    } = options;
+        options,
+    } = props;
 
     const renderedScore = ref(null);
     const isLoading = ref(true);
@@ -58,7 +62,7 @@ export function useVerovio(options, templateRef) {
         }
     }
 
-    watch([scale, dimensions, viewMode], () => {
+    watch([options, dimensions, viewMode], () => {
         redoLayout();
     });
 
@@ -71,28 +75,26 @@ export function useVerovio(options, templateRef) {
     }
 
     function generateVerovioOptions() {
-        const options = {
+        const opt = Object.assign({}, defaultOptions, {
             scale: scale.value,
-            header: header.value,
-            footer: footer.value,
-            pageWidth: Math.min(Math.max(dimensions.width * (100 / scale.value), 100), 60000),
-            pageHeight: Math.min(Math.max(dimensions.height * (100 / scale.value), 100), 60000),
-            pageMarginTop: (pageMarginTop.value ? pageMarginTop.value : pageMargin.value) * (100 / scale.value),
-            pageMarginRight: (pageMarginRight.value ? pageMarginRight.value : pageMargin.value) * (100 / scale.value),
-            pageMarginBottom:
-                (pageMarginBottom.value ? pageMarginBottom.value : pageMargin.value) * (100 / scale.value),
-            pageMarginLeft: (pageMarginLeft.value ? pageMarginLeft.value : pageMargin.value) * (100 / scale.value),
-            spacingSystem: Math.min(Math.max(spacingSystem.value, 0), 48),
-        };
+        }, options.value);
+        Object.assign(opt, {
+            pageWidth: Math.min(Math.max(dimensions.width * (100 / opt.scale), 100), 60000),
+            pageHeight: Math.min(Math.max(dimensions.height * (100 / opt.scale), 100), 60000),
+            pageMarginTop: opt.pageMarginTop ? opt.pageMarginTop : pageMargin.value,
+            pageMarginRight: opt.pageMarginRight ? opt.pageMarginRight : pageMargin.value,
+            pageMarginBottom: opt.pageMarginBottom ? opt.pageMarginBottom : pageMargin.value,
+            pageMarginLeft: opt.pageMarginLeft ? opt.pageMarginLeft : pageMargin.value,
+        });
         if (viewMode.value === 'vertical') {
-            options.adjustPageHeight = true;
-            options.pageHeight = 60000;
+            opt.adjustPageHeight = true;
+            opt.pageHeight = 60000;
         } else if (viewMode.value === 'horizontal') {
-            options.adjustPageHeight = true;
-            options.breaks = 'none';
-            options.pageWidth = 60000;
+            opt.adjustPageHeight = true;
+            opt.breaks = 'none';
+            opt.pageWidth = 60000;
         }
-        return options;
+        return opt;
     }
 
     function redoLayout() {

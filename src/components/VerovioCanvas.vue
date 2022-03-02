@@ -35,40 +35,10 @@ const props = defineProps({
         required: false,
         default: 0,
     },
-    pageMarginTop: {
-        type: Number,
+    options: {
+        type: Object,
         required: false,
-        default: 0,
-    },
-    pageMarginRight: {
-        type: Number,
-        required: false,
-        default: 0,
-    },
-    pageMarginBottom: {
-        type: Number,
-        required: false,
-        default: 0,
-    },
-    pageMarginLeft: {
-        type: Number,
-        required: false,
-        default: 0,
-    },
-    header: {
-        type: String,
-        required: false,
-        default: 'none',
-    },
-    footer: {
-        type: String,
-        required: false,
-        default: 'none',
-    },
-    spacingSystem: {
-        type: Number,
-        required: false,
-        default: 12,
+        default: () => ({}),
     },
 });
 
