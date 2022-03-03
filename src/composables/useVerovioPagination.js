@@ -6,7 +6,7 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
     let renderCurrentPageTimeout = null;
 
     watch(page, () => {
-        renderCurrentPage();
+        renderCurrentPageWithTimeout();
     });
 
     function nextPage() {
@@ -28,13 +28,18 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
         return Math.min(Math.max(value, 1), verovioToolkit.value.getPageCount());
     }
 
+    function renderCurrentPageWithTimeout() {
+        clearTimeout(renderCurrentPageTimeout);
+        renderCurrentPageTimeout = setTimeout(() => {
+            renderCurrentPage();
+        }, 100);
+    }
+
     function renderCurrentPage() {
         if (verovioIsReady.value) {
             clearTimeout(renderCurrentPageTimeout);
             isLoading.value = true;
-            renderCurrentPageTimeout = setTimeout(() => {
-                setRenderedScoreToPage(page.value);
-            }, 100);
+            setRenderedScoreToPage(page.value);
         }
     }
 
