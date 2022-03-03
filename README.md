@@ -103,7 +103,8 @@ const page = computed({
 
 ## Custom Verovio method calls
 
-Use `callVerovioMethod` to call other methods on the Verovio toolkit:
+Use `callVerovioMethod` to call other methods on the Verovio toolkit instance. `callVerovioMethod` is async
+to ensure that the Verovio runtime is initialized and the score if already loaded.
 
 ```
 <script setup>
