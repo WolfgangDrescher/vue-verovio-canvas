@@ -71,6 +71,11 @@ export function useVerovio(props, templateRef) {
         verovioToolkit.value.setOptions(generateVerovioOptions());
     }
 
+    async function callVerovioMethod(methodName, ...args) {
+        await verovioIsReady.promise;
+        return verovioToolkit.value[methodName](...args);
+    }
+
     function generateVerovioOptions() {
         const opt = Object.assign({}, defaultOptions, {
             scale: scale.value,
@@ -144,6 +149,7 @@ export function useVerovio(props, templateRef) {
         isError: readonly(isError),
         message: readonly(message),
         dimensions: readonly(dimensions),
+        callVerovioMethod,
         nextPage,
         prevPage,
         setPage,
