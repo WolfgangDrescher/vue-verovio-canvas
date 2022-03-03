@@ -2,8 +2,9 @@ import { ref, readonly, watch } from 'vue';
 import verovio from 'verovio-humdrum';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
+import { useDeferred } from './useDeferred';
 
-let verovioRuntimeInitialized = false;
+let verovioRuntimeInitialized = useDeferred();
 
 const defaultOptions = {
     scale: 40,
@@ -32,7 +33,6 @@ export function useVerovio(props, templateRef) {
     const verovioToolkit = ref(null);
     const verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
-    let verovioRuntimeInterval = null;
 
     const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(
         verovioToolkit,
@@ -46,19 +46,17 @@ export function useVerovio(props, templateRef) {
 
     verovio.module.onRuntimeInitialized = onRuntimeInitializedEvent;
 
-    verovioRuntimeInterval = setInterval(() => {
-        if (verovioRuntimeInitialized) {
-            clearInterval(verovioRuntimeInterval);
-            onRuntimeInitializedEvent();
-        }
-    }, 50);
+    verovioRuntimeInitialized.promise.then((verovioToolkitInstance) => {
+        verovioToolkit.value = verovioToolkitInstance;
+        onRuntimeInitializedEvent();
+    });
+
+    loadScoreFile();
 
     function onRuntimeInitializedEvent() {
         if(verovioToolkit.value === null) {
-            verovioRuntimeInitialized = true;
-            verovioToolkit.value = new verovio.toolkit();
             setVerovioOptions();
-            loadScoreFile();
+            verovioRuntimeInitialized.resolve(new verovio.toolkit());
         }
     }
 
@@ -111,15 +109,14 @@ export function useVerovio(props, templateRef) {
 
     async function loadScoreFile() {
         try {
-            if(verovioRuntimeInitialized) {
-                const data = await getData();
-                message.value = 'Load score with verovio';
-                // verovio wont throw on invlaid input files
-                verovioToolkit.value.loadData(data);
-                verovioIsReady.value = true;
-                message.value = 'Render current page with verovio';
-                setRenderedScoreToPage(page.value);
-            }
+            await verovioRuntimeInitialized.promise;
+            const data = await getData();
+            message.value = 'Load score with verovio';
+            // verovio wont throw on invlaid input files
+            verovioToolkit.value.loadData(data);
+            verovioIsReady.value = true;
+            message.value = 'Render current page with verovio';
+            setRenderedScoreToPage(page.value);
         } catch (e) {
             isError.value = true;
             message.value = `Cannot display score with verovio (${e.message})`;
