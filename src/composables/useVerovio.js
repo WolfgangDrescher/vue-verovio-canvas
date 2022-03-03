@@ -34,7 +34,7 @@ export function useVerovio(props, templateRef) {
     const verovioIsReady = ref(false);
     let redoLayoutTimeout = null;
 
-    const { page, nextPage, prevPage, setPage, setRenderedScoreToPage } = useVerovioPagination(
+    const { page, nextPage, prevPage, setPage, renderCurrentPage } = useVerovioPagination(
         verovioToolkit,
         renderedScore,
         verovioIsReady,
@@ -101,7 +101,7 @@ export function useVerovio(props, templateRef) {
             redoLayoutTimeout = setTimeout(() => {
                 setVerovioOptions();
                 verovioToolkit.value.redoLayout();
-                setRenderedScoreToPage(page.value);
+                renderCurrentPage();
             }, 100);
         }
     }
@@ -116,7 +116,7 @@ export function useVerovio(props, templateRef) {
             verovioToolkit.value.loadData(data);
             verovioIsReady.value = true;
             message.value = 'Render current page with verovio';
-            setRenderedScoreToPage(page.value);
+            renderCurrentPage();
         } catch (e) {
             isError.value = true;
             message.value = `Cannot display score with verovio (${e.message})`;

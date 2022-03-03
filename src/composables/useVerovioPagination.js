@@ -53,6 +53,6 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
         nextPage,
         prevPage,
         setPage,
-        setRenderedScoreToPage,
+        renderCurrentPage,
     };
 }
