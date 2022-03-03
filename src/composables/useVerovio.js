@@ -59,7 +59,7 @@ export function useVerovio(props, templateRef) {
         }
     }
 
-    watch([options, dimensions, viewMode], () => {
+    watch([scale, options, dimensions, viewMode], () => {
         redoLayout();
     });
 
