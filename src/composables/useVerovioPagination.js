@@ -38,8 +38,8 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
         }
     }
 
-    function setRenderedScoreToPage(page) {
-        renderedScore.value = verovioToolkit.value.renderToSVG(page, {});
+    function setRenderedScoreToPage(p) {
+        renderedScore.value = verovioToolkit.value.renderToSVG(p, {});
         isLoading.value = false;
     }
 
