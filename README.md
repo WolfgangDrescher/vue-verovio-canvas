@@ -40,3 +40,64 @@ container element with specific dimensions:
 
 You can also use the wrapper element with specific dimensions if you want to use
 `vertical` view mode but with scrollable on the y-axis.
+
+## Eposed variables and methods
+
+The `<VerovioCanvas>` component exposes the following options
+
+```
+defineExpose({
+    isLoading,
+    dimensions,
+    page,
+    callVerovioMethod,
+    nextPage,
+    prevPage,
+    setPage,
+});
+```
+
+These exposed variables and methods can be used to interact with the `VerovioCanvas` component:
+
+```
+<script setup>
+import { ref, computed } from 'vue';
+
+const scale = ref(30);
+const score = ref(null);
+const viewMode = ref('page');
+
+function next() {
+    score.value.nextPage();
+}
+
+function prev() {
+    score.value.prevPage();
+}
+
+const page = computed({
+    get() {
+        return score.value && score.value.page;
+    },
+    set(value) {
+        score.value.setPage(value);
+    },
+});
+</script>
+
+<template>
+    <input type="range" min="1" max="100" v-model.number="scale" />
+    <select v-model="viewMode">
+        <option value="page">page</option>
+        <option value="horizontal">horizontal</option>
+        <option value="vertical">vertical</option>
+    </select>
+    <button @click="prev">prev page</button>
+    <input type="text" v-model.lazy="page" />
+    <button @click="next">next page</button>
+    <div style="width: 640px; height: 360px">
+        <VerovioCanvas ref="score" url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" :scale="scale" :view-mode="viewMode" />
+    </div>
+</template>
+```
+
