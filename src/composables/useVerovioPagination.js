@@ -35,12 +35,11 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
         }, 100);
     }
 
-    function renderCurrentPage() {
-        if (verovioIsReady.value) {
-            isLoading.value = true;
-            page.value = validate(page.value);
-            setRenderedScoreToPage(page.value);
-        }
+    async function renderCurrentPage() {
+        isLoading.value = true;
+        await verovioIsReady.promise;
+        page.value = validate(page.value);
+        setRenderedScoreToPage(page.value);
     }
 
     function setRenderedScoreToPage(p) {
