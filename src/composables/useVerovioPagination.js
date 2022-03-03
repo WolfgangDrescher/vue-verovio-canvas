@@ -39,6 +39,7 @@ export function useVerovioPagination(verovioToolkit, renderedScore, verovioIsRea
         if (verovioIsReady.value) {
             clearTimeout(renderCurrentPageTimeout);
             isLoading.value = true;
+            page.value = validate(page.value);
             setRenderedScoreToPage(page.value);
         }
     }
