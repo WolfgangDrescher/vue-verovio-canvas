@@ -101,3 +101,26 @@ const page = computed({
 </template>
 ```
 
+## Custom Verovio method calls
+
+Use `callVerovioMethod` to call other methods on the Verovio toolkit:
+
+```
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const score = ref(null);
+onMounted(() => {
+    score.value.callVerovioMethod('renderToMIDI', {
+        midiTempoAdjustment: 1.25,
+    }).then(midiBase64 => {
+        console.log(midiBase64);
+    });
+});
+</script>
+
+<template>
+    <VerovioCanvas ref="score" url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" />
+</template>
+
+```
