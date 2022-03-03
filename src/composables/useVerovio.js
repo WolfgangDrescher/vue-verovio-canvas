@@ -54,7 +54,7 @@ export function useVerovio(props, templateRef) {
     loadScoreFile();
 
     function onRuntimeInitializedEvent() {
-        if(verovioToolkit.value === null) {
+        if (verovioToolkit.value === null) {
             verovioRuntimeInitialized.resolve(new verovio.toolkit());
         }
     }
@@ -100,7 +100,7 @@ export function useVerovio(props, templateRef) {
     }
 
     async function redoLayout() {
-        await verovioIsReady.promise
+        await verovioIsReady.promise;
         clearTimeout(redoLayoutTimeout);
         isLoading.value = true;
         redoLayoutTimeout = setTimeout(() => {
@@ -131,7 +131,7 @@ export function useVerovio(props, templateRef) {
     async function getData() {
         if (data.value) {
             return data.value;
-        } else if(url.value) {
+        } else if (url.value) {
             message.value = 'Fetching score file from server';
             const response = await fetch(url.value);
             if (!response.ok) {
