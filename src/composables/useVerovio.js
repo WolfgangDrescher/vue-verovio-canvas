@@ -46,8 +46,8 @@ export function useVerovio(props, templateRef) {
 
     verovio.module.onRuntimeInitialized = onRuntimeInitializedEvent;
 
-    verovioRuntimeInitialized.promise.then((verovioToolkitInstance) => {
-        verovioToolkit.value = verovioToolkitInstance;
+    verovioRuntimeInitialized.promise.then(() => {
+        verovioToolkit.value = new verovio.toolkit();
         onRuntimeInitializedEvent();
     });
 
@@ -55,7 +55,7 @@ export function useVerovio(props, templateRef) {
 
     function onRuntimeInitializedEvent() {
         if (verovioToolkit.value === null) {
-            verovioRuntimeInitialized.resolve(new verovio.toolkit());
+            verovioRuntimeInitialized.resolve();
         }
     }
 
