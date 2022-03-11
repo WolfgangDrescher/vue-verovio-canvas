@@ -41,7 +41,7 @@ container element with specific dimensions:
 You can also use the wrapper element with specific dimensions if you want to use
 `vertical` view mode but with scrollable on the y-axis.
 
-## Eposed variables and methods
+## Exposed variables and methods
 
 The `<VerovioCanvas>` component exposes the following options
 
