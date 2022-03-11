@@ -125,3 +125,21 @@ onMounted(() => {
 </template>
 
 ```
+
+## Avoid use with SSR
+
+Errors may occur when the component is loaded with server side rendering. Try to
+load the `VerovioCanvas` component in wrapped in `ClientOnly`. If not available
+you can try something like this:
+
+```
+<script setup>
+import { defineAsyncComponent } from 'vue';
+import 'vue-verovio-canvas/dist/style.css';
+const AsyncVerovioCanvas = defineAsyncComponent(() => import('vue-verovio-canvas'));
+</script>
+
+<template>
+    <component :is="AsyncVerovioCanvas" v-bind="{...$attrs, ...$props}"></component>
+</template>
+```
