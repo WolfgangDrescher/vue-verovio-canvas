@@ -18,5 +18,13 @@ export default defineConfig({
             name: 'vue-verovio-canvas',
             fileName: (format) => `vue-verovio-canvas.${format}.js`,
         },
+        rollupOptions: {
+            external: ['vue'],
+            output: {
+                globals: {
+                    vue: 'Vue',
+                },
+            },
+        },
     },
 });
