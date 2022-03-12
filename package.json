@@ -1,6 +1,16 @@
 {
   "name": "vue-verovio-canvas",
   "version": "0.0.0",
+  "files": ["dist"],
+  "main": "./dist/vue-verovio-canvas.umd.js",
+  "module": "./dist/vue-verovio-canvas.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-verovio-canvas.es.js",
+      "require": "./dist/vue-verovio-canvas.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -19,5 +29,8 @@
     "eslint-plugin-vue": "^8.2.0",
     "prettier": "^2.5.1",
     "vite": "^2.7.13"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.29"
   }
 }
