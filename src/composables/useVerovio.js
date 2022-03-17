@@ -1,5 +1,5 @@
 import { ref, readonly, watch } from 'vue';
-import verovio from 'verovio-humdrum';
+import { VerovioToolkitProxy } from '../worker/VerovioToolkitProxy';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 import { useDeferred } from './useDeferred';
@@ -30,7 +30,7 @@ export function useVerovio(props, templateRef) {
     const isLoading = ref(true);
     const isError = ref(false);
     const message = ref(null);
-    const verovioToolkit = ref(null);
+    const verovioToolkit = new VerovioToolkitProxy();
     const verovioIsReady = useDeferred();
     let redoLayoutTimeout = null;
 
@@ -44,19 +44,15 @@ export function useVerovio(props, templateRef) {
 
     message.value = 'Initializing Verovio WebAssembly runtime';
 
-    verovio.module.onRuntimeInitialized = onRuntimeInitializedEvent;
 
-    verovioRuntimeInitialized.promise.then(() => {
-        verovioToolkit.value = new verovio.toolkit();
+    verovioToolkit.onRuntimeInitialized().then(async () => {
         onRuntimeInitializedEvent();
     });
 
     loadScoreFile();
 
     function onRuntimeInitializedEvent() {
-        if (verovioToolkit.value === null) {
-            verovioRuntimeInitialized.resolve();
-        }
+        verovioRuntimeInitialized.resolve();
     }
 
     watch([scale, options, dimensions, viewMode], () => {
@@ -67,13 +63,13 @@ export function useVerovio(props, templateRef) {
         loadScoreFile();
     });
 
-    function setVerovioOptions() {
-        verovioToolkit.value.setOptions(generateVerovioOptions());
+    async function setVerovioOptions() {
+        await verovioToolkit.setOptions(generateVerovioOptions());
     }
 
     async function callVerovioMethod(methodName, ...args) {
         await verovioIsReady.promise;
-        return verovioToolkit.value[methodName](...args);
+        return await verovioToolkit[methodName](...args);
     }
 
     function generateVerovioOptions() {
@@ -103,10 +99,10 @@ export function useVerovio(props, templateRef) {
         await verovioIsReady.promise;
         clearTimeout(redoLayoutTimeout);
         isLoading.value = true;
-        redoLayoutTimeout = setTimeout(() => {
-            setVerovioOptions();
-            verovioToolkit.value.redoLayout();
-            renderCurrentPage();
+        redoLayoutTimeout = setTimeout(async () => {
+            await setVerovioOptions();
+            await verovioToolkit.redoLayout();
+            await renderCurrentPage();
         }, 100);
     }
 
@@ -117,10 +113,10 @@ export function useVerovio(props, templateRef) {
             const data = await getData();
             message.value = 'Load score with verovio';
             // verovio wont throw on invlaid input files
-            verovioToolkit.value.loadData(data);
+            await verovioToolkit.loadData(data);
             verovioIsReady.resolve();
             message.value = 'Render current page with verovio';
-            renderCurrentPage();
+            await renderCurrentPage();
         } catch (e) {
             isError.value = true;
             message.value = `Cannot display score with verovio (${e.message})`;
