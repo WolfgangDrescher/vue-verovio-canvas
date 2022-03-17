@@ -13,7 +13,6 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     };
 
     addEventListener('message', function (event) {
-        console.log('worker', 'message', event);
         const { id, method, args } = event.data;
 
         if(method === 'onRuntimeInitialized') {

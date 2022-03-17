@@ -2,8 +2,6 @@ import { useDeferred } from '../composables/useDeferred';
 import { v4 as uuidv4 } from 'uuid';
 import VerovioWorker from './verovio.worker.js?worker';
 
-console.log(new VerovioWorker());
-
 const workerTasks = {};
 
 export class VerovioToolkitProxy {
@@ -15,7 +13,6 @@ export class VerovioToolkitProxy {
             if (deferred) {
                 deferred.resolve(result);
                 delete workerTasks[id];
-                console.table(workerTasks);
             }
         });
 
