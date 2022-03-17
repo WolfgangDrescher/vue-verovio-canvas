@@ -2,17 +2,16 @@ import { useDeferred } from '../composables/useDeferred';
 import { v4 as uuidv4 } from 'uuid';
 import VerovioWorker from './verovio.worker.js?worker';
 
-const workerTasks = {};
-
 export class VerovioToolkitProxy {
     constructor() {
+        this.tasks = {};
         this.worker = new VerovioWorker();
         this.worker.addEventListener('message', function (event) {
             const { id, result } = event.data;
-            const deferred = workerTasks[id];
+            const deferred = this.tasks[id];
             if (deferred) {
                 deferred.resolve(result);
-                delete workerTasks[id];
+                delete this.tasks[id];
             }
         });
 
@@ -33,7 +32,7 @@ export class VerovioToolkitProxy {
                     });
 
                     const deferred = useDeferred();
-                    workerTasks[id] = deferred;
+                    this.tasks[id] = deferred;
 
                     return deferred.promise;
                 };
