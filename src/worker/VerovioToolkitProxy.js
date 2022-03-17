@@ -21,8 +21,7 @@ export class VerovioToolkitProxy {
 
         return new Proxy(this, {
             get: (target, method) => {
-                return () => {
-                    const args = Array.prototype.slice.call(arguments);
+                return (...args) => {
                     const id = uuidv4();
 
                     target.worker.postMessage({
