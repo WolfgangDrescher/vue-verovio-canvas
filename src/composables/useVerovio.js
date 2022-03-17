@@ -109,7 +109,7 @@ export function useVerovio(props, templateRef) {
     async function loadScoreFile() {
         try {
             await verovioRuntimeInitialized.promise;
-            setVerovioOptions();
+            await setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';
             // verovio wont throw on invlaid input files
