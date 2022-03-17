@@ -6,7 +6,7 @@ export class VerovioToolkitProxy {
     constructor() {
         this.tasks = {};
         this.worker = new VerovioWorker();
-        this.worker.addEventListener('message', function (event) {
+        this.worker.addEventListener('message', (event) => {
             const { id, result } = event.data;
             const deferred = this.tasks[id];
             if (deferred) {
@@ -15,13 +15,13 @@ export class VerovioToolkitProxy {
             }
         });
 
-        this.worker.addEventListener('error', function (event) {
+        this.worker.addEventListener('error', (event) => {
             console.error(event);
         });
 
         return new Proxy(this, {
             get: (target, method) => {
-                return function () {
+                return () => {
                     const args = Array.prototype.slice.call(arguments);
                     const id = uuidv4();
 
