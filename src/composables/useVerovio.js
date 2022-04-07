@@ -49,9 +49,18 @@ export function useVerovio(props, templateRef) {
     verovioRuntimeInitialized.promise.then(() => {
         verovioToolkit.value = new verovio.toolkit();
         onRuntimeInitializedEvent();
+        if (import.meta.hot) {
+            import.meta.hot.data.verovioRuntimeInitialized = true;
+        }
     });
 
     loadScoreFile();
+
+    if (import.meta.hot) {
+        if (import.meta.hot.data.verovioRuntimeInitialized) {
+            verovioRuntimeInitialized.resolve();
+        }
+    }
 
     function onRuntimeInitializedEvent() {
         if (verovioToolkit.value === null) {
