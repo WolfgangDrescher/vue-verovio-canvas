@@ -1,10 +1,9 @@
 import { ref, readonly, watch } from 'vue';
-import verovio from 'verovio-humdrum';
+import createVerovioModule from 'verovio/wasm-hum';
+import { VerovioToolkit } from 'verovio/esm';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 import { useDeferred } from './useDeferred';
-
-let verovioRuntimeInitialized = useDeferred();
 
 const defaultOptions = {
     scale: 40,
@@ -44,29 +43,10 @@ export function useVerovio(props, templateRef) {
 
     message.value = 'Initializing Verovio WebAssembly runtime';
 
-    verovio.module.onRuntimeInitialized = onRuntimeInitializedEvent;
-
-    verovioRuntimeInitialized.promise.then(() => {
-        verovioToolkit.value = new verovio.toolkit();
-        onRuntimeInitializedEvent();
-        if (import.meta.hot) {
-            import.meta.hot.data.verovioRuntimeInitialized = true;
-        }
+    createVerovioModule().then(VerovioModule => {
+        verovioToolkit.value = new VerovioToolkit(VerovioModule);
+        loadScoreFile();
     });
-
-    loadScoreFile();
-
-    if (import.meta.hot) {
-        if (import.meta.hot.data.verovioRuntimeInitialized) {
-            verovioRuntimeInitialized.resolve();
-        }
-    }
-
-    function onRuntimeInitializedEvent() {
-        if (verovioToolkit.value === null) {
-            verovioRuntimeInitialized.resolve();
-        }
-    }
 
     watch([scale, options, dimensions, viewMode], () => {
         redoLayout();
@@ -121,7 +101,7 @@ export function useVerovio(props, templateRef) {
 
     async function loadScoreFile() {
         try {
-            await verovioRuntimeInitialized.promise;
+            await verovioToolkit.value.VerovioModule.ready;
             setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';

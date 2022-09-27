@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "verovio-humdrum": "^3.9.0"
+    "verovio": "^3.11.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
