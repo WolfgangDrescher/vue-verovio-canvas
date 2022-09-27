@@ -19,20 +19,20 @@ If you want to display the whole score at once with the available width of the
 parent container element and the hight of the score adjusted to the required
 height use the `vertical` view mode:
 
-```
+```vue
 <VerovioCanvas url="/file.mei" view-mode="vertical" />
 ```
 
 Or use the `horizontal` view mode to make the score scrollable on the x-axis:
 
-```
+```vue
 <VerovioCanvas url="/file.mei" view-mode="horizontal" />
 ```
 
 If you want to use pagination wrap the `<VerovioCanvas />` component in a
 container element with specific dimensions:
 
-```
+```vue
 <div style="width: 640px; height: 360px;">
     <VerovioCanvas url="/file.mei" view-mode="page" />
 </div>
@@ -45,7 +45,7 @@ You can also use the wrapper element with specific dimensions if you want to use
 
 The `<VerovioCanvas>` component exposes the following options
 
-```
+```js
 defineExpose({
     isLoading,
     dimensions,
@@ -59,7 +59,7 @@ defineExpose({
 
 These exposed variables and methods can be used to interact with the `VerovioCanvas` component:
 
-```
+```vue
 <script setup>
 import { ref, computed } from 'vue';
 
@@ -106,7 +106,7 @@ const page = computed({
 Use `callVerovioMethod` to call other methods on the Verovio toolkit instance. `callVerovioMethod` is async
 to ensure that the Verovio runtime is initialized and the score if already loaded.
 
-```
+```vue
 <script setup>
 import { ref, onMounted } from 'vue';
 
@@ -132,7 +132,7 @@ Errors may occur when the component is loaded with server side rendering. Try to
 load the `VerovioCanvas` component in wrapped in `ClientOnly`. If not available
 you can try something like this:
 
-```
+```vue
 <script setup>
 import { defineAsyncComponent } from 'vue';
 import 'vue-verovio-canvas/dist/style.css';
