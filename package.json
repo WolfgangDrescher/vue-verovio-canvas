@@ -21,6 +21,7 @@
     "vue": "^3.2.39"
   },
   "dependencies": {
+    "@vueuse/core": "^9.6.0",
     "verovio": "^3.13.0"
   }
 }
