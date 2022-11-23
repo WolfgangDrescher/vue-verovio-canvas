@@ -108,8 +108,10 @@ export function useVerovio(props, templateRef) {
             setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';
+            if (!select.value || Object.keys(select.value).length !== 0 || Object.getPrototypeOf(select.value) !== Object.prototype) {
+                verovioToolkit.value.select(select.value);
+            }
             // verovio wont throw on invlaid input files
-            verovioToolkit.value.select(select.value);
             verovioToolkit.value.loadData(data);
             verovioIsReady.resolve();
             message.value = 'Render current page with verovio';
