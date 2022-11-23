@@ -2,6 +2,7 @@
 import { ref, toRefs } from 'vue';
 import { useVerovio } from '../composables/useVerovio';
 import Loading from './Loading.vue';
+import { useIntersectionObserver } from '@vueuse/core';
 
 const props = defineProps({
     url: {
@@ -45,11 +46,27 @@ const props = defineProps({
         required: false,
         default: () => ({}),
     },
+    lazy: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const verovioCanvas = ref(null);
 
-const { isLoading, isError, renderedScore, message, dimensions, page, callVerovioMethod, nextPage, prevPage, setPage } = useVerovio(
+const {
+    isLoading,
+    isError,
+    renderedScore,
+    message,
+    dimensions,
+    page,
+    callVerovioMethod,
+    nextPage,
+    prevPage,
+    setPage,
+    load,
+} = useVerovio(
     toRefs(props),
     verovioCanvas
 );
@@ -63,6 +80,18 @@ defineExpose({
     prevPage,
     setPage,
 });
+
+if(props.lazy) {
+    const { stop } = useIntersectionObserver(verovioCanvas, ([{ isIntersecting }]) => {
+        if(isIntersecting === true) {
+            load();
+            stop();
+        }
+    })
+} else {
+    load();
+}
+
 </script>
 
 <template>
