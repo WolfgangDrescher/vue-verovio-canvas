@@ -1,6 +1,6 @@
 import { ref, readonly, watch } from 'vue';
 import createVerovioModule from 'verovio/wasm-hum';
-import { VerovioToolkit } from 'verovio/esm';
+import { VerovioToolkit, LOG_WARNING as verovioLogLevelWarning, enableLog as verovioEnableLog } from 'verovio/esm';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 import { useDeferred } from './useDeferred';
@@ -46,6 +46,7 @@ export function useVerovio(props, templateRef) {
     message.value = 'Initializing Verovio WebAssembly runtime';
 
     createVerovioModule().then(VerovioModule => {
+        verovioEnableLog(verovioLogLevelWarning, VerovioModule);
         verovioToolkit.value = new VerovioToolkit(VerovioModule);
         verovioModuleIsReady.resolve();
     });
