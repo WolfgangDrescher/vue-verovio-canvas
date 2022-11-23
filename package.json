@@ -7,9 +7,6 @@
     "preview": "vite preview --port 5050",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
-  "dependencies": {
-    "verovio": "^3.11.0"
-  },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@vitejs/plugin-vue": "^3.1.0",
@@ -22,5 +19,8 @@
   },
   "peerDependencies": {
     "vue": "^3.2.39"
+  },
+  "dependencies": {
+    "verovio": "^3.13.0"
   }
 }
