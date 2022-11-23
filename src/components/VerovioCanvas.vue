@@ -40,6 +40,11 @@ const props = defineProps({
         required: false,
         default: () => ({}),
     },
+    select: {
+        type: Object,
+        required: false,
+        default: () => ({}),
+    },
 });
 
 const verovioCanvas = ref(null);

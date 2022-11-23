@@ -23,6 +23,7 @@ export function useVerovio(props, templateRef) {
         viewMode,
         pageMargin,
         options,
+        select,
     } = props;
 
     const renderedScore = ref(null);
@@ -106,6 +107,7 @@ export function useVerovio(props, templateRef) {
             const data = await getData();
             message.value = 'Load score with verovio';
             // verovio wont throw on invlaid input files
+            verovioToolkit.value.select(select.value);
             verovioToolkit.value.loadData(data);
             verovioIsReady.resolve();
             message.value = 'Render current page with verovio';
