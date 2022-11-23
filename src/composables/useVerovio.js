@@ -32,6 +32,7 @@ export function useVerovio(props, templateRef) {
     const message = ref(null);
     const verovioToolkit = ref(null);
     const verovioIsReady = useDeferred();
+    const verovioModuleIsReady = useDeferred();
     let redoLayoutTimeout = null;
 
     const { page, nextPage, prevPage, setPage, renderCurrentPage } = useVerovioPagination(
@@ -46,7 +47,7 @@ export function useVerovio(props, templateRef) {
 
     createVerovioModule().then(VerovioModule => {
         verovioToolkit.value = new VerovioToolkit(VerovioModule);
-        loadScoreFile();
+        verovioModuleIsReady.resolve();
     });
 
     watch([scale, options, dimensions, viewMode], () => {
@@ -133,6 +134,11 @@ export function useVerovio(props, templateRef) {
         throw new Error('Input missing: pass url or data prop');
     }
 
+    async function load() {
+        await verovioModuleIsReady.promise;
+        return await loadScoreFile();
+    }
+
     return {
         renderedScore: readonly(renderedScore),
         page: readonly(page),
@@ -144,5 +150,6 @@ export function useVerovio(props, templateRef) {
         nextPage,
         prevPage,
         setPage,
+        load,
     };
 }
