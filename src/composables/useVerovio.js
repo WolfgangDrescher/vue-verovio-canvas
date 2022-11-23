@@ -31,14 +31,14 @@ export function useVerovio(props, templateRef) {
     const isError = ref(false);
     const message = ref(null);
     const verovioToolkit = ref(null);
-    const verovioIsReady = useDeferred();
+    const scoreIsReady = useDeferred();
     const verovioModuleIsReady = useDeferred();
     let redoLayoutTimeout = null;
 
     const { page, nextPage, prevPage, setPage, renderCurrentPage } = useVerovioPagination(
         verovioToolkit,
         renderedScore,
-        verovioIsReady,
+        scoreIsReady,
         isLoading
     );
     const { dimensions } = useVerovioResizeObserver(templateRef);
@@ -64,7 +64,7 @@ export function useVerovio(props, templateRef) {
     }
 
     async function callVerovioMethod(methodName, ...args) {
-        await verovioIsReady.promise;
+        await scoreIsReady.promise;
         return verovioToolkit.value[methodName](...args);
     }
 
@@ -92,7 +92,7 @@ export function useVerovio(props, templateRef) {
     }
 
     async function redoLayout() {
-        await verovioIsReady.promise;
+        await scoreIsReady.promise;
         clearTimeout(redoLayoutTimeout);
         isLoading.value = true;
         redoLayoutTimeout = setTimeout(() => {
@@ -113,7 +113,7 @@ export function useVerovio(props, templateRef) {
             }
             // verovio wont throw on invlaid input files
             verovioToolkit.value.loadData(data);
-            verovioIsReady.resolve();
+            scoreIsReady.resolve();
             message.value = 'Render current page with verovio';
             renderCurrentPage();
         } catch (e) {
