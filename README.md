@@ -2,6 +2,69 @@
 
 A Vue 3 component to display music scores with [Verovio](https://www.verovio.org/index.xhtml).
 
+This component requires the use of an async wrapper around `VerovioToolkit` to
+ensure compatibility when using Verovio as a web worker. To set everything up
+quickly this package exports helper functions: `createAsyncVerovioToolkit`,
+`createWorkerVerovioToolkit` and `createVerovioWorker`.
+
+## Installation
+
+```shell
+npm i vue-verovio-canvas verovio
+```
+
+## Usage with a web worker
+
+How to use a web worker requires a somewhat advanced setup. And a bundler like
+[Vite] (https://vitejs.dev/) to get access to the web worker.
+
+workers/verovio.js:
+
+```js
+import createVerovioModule from 'verovio/wasm'; // use verovio/wasm-hum for humdrum support
+import { VerovioToolkit, enableLog, LOG_OFF as logLevel } from 'verovio/esm';
+import { createVerovioWorker } from 'vue-verovio-canvas';
+
+createVerovioWorker(createVerovioModule, VerovioToolkit, enableLog, logLevel);
+```
+
+components/VerovioCanvas.vue:
+
+```vue
+<script setup>
+import 'vue-verovio-canvas/style.css';
+import { VerovioCanvas, createWorkerVerovioToolkit } from 'vue-verovio-canvas';
+import createVerovioWorker from '../workers/verovio.js?worker';
+const toolkit = createWorkerVerovioToolkit(createVerovioWorker());
+</script>
+
+<template>
+    <VerovioCanvas v-bind="{ ...$attrs, ...$props }" :toolkit="toolkit" />
+</template>
+```
+
+## Basic usage
+
+components/VerovioCanvas.vue:
+
+```vue
+<script setup>
+import 'vue-verovio-canvas/style.css';
+import { VerovioCanvas, createAsyncVerovioToolkit } from 'vue-verovio-canvas';
+import { VerovioToolkit } from 'verovio/esm';
+import createVerovioModule from 'verovio/wasm-hum';
+
+const toolkit = ref(null);
+createVerovioModule().then(VerovioModule => {
+    toolkit.value = createAsyncVerovioToolkit(new VerovioToolkit(VerovioModule));
+});
+</script>
+
+<template>
+    <VerovioCanvas v-bind="{ ...$attrs, ...$props }" :toolkit="toolkit" />
+</template>
+```
+
 ## Props
 
 | Prop       | Default    | Description                                                                                                 |
@@ -14,6 +77,7 @@ A Vue 3 component to display music scores with [Verovio](https://www.verovio.org
 | options    | –          | Pass options to verovio; Use `verovio -h` in the CLI to check all options and values                        |
 | select     | `{}`       | Select a portion of a score; e.g. `{measureRange: '8-end'}`, `{start: 'measure-L337', end: 'measure-L355'}` |
 | lazy       | `false`    | Lazy load verovio score when visible on screen                                                              |
+| toolkit    | –          | A `createWorkerVerovioToolkit` or `createAsyncVerovioToolkit` instance                                      |
 
 ## Info
 
