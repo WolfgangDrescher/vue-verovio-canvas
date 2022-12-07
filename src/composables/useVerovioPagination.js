@@ -9,23 +9,23 @@ export function useVerovioPagination(verovioToolkit, renderedScore, scoreIsReady
         renderCurrentPageWithTimeout();
     });
 
-    function nextPage() {
-        page.value = validate(page.value + 1);
+    async function nextPage() {
+        page.value = await validate(page.value + 1);
     }
 
-    function prevPage() {
-        page.value = validate(page.value - 1);
+    async function prevPage() {
+        page.value = await validate(page.value - 1);
     }
 
-    function setPage(value) {
-        page.value = validate(value);
+    async function setPage(value) {
+        page.value = await validate(value);
     }
 
-    function validate(value) {
+    async function validate(value) {
         if (!Number.isInteger(Number(value))) {
             throw new Error(`Page must be an integer, "${value}" given.`);
         }
-        return Math.min(Math.max(value, 1), verovioToolkit.value.getPageCount());
+        return Math.min(Math.max(value, 1), await verovioToolkit.value.getPageCount());
     }
 
     function renderCurrentPageWithTimeout() {
@@ -38,12 +38,12 @@ export function useVerovioPagination(verovioToolkit, renderedScore, scoreIsReady
     async function renderCurrentPage() {
         isLoading.value = true;
         await scoreIsReady.promise;
-        page.value = validate(page.value);
+        page.value = await validate(page.value);
         setRenderedScoreToPage(page.value);
     }
 
-    function setRenderedScoreToPage(p) {
-        renderedScore.value = verovioToolkit.value.renderToSVG(p, {});
+    async function setRenderedScoreToPage(p) {
+        renderedScore.value = await verovioToolkit.value.renderToSVG(p);
         isLoading.value = false;
     }
 

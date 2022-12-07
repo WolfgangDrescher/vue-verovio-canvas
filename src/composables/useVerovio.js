@@ -59,13 +59,13 @@ export function useVerovio(props, templateRef) {
         loadScoreFile();
     });
 
-    function setVerovioOptions() {
-        verovioToolkit.value.setOptions(generateVerovioOptions());
+    async function setVerovioOptions() {
+        await verovioToolkit.value.setOptions(generateVerovioOptions());
     }
 
     async function callVerovioMethod(methodName, ...args) {
         await scoreIsReady.promise;
-        return verovioToolkit.value[methodName](...args);
+        return await verovioToolkit.value[methodName](...args);
     }
 
     function generateVerovioOptions() {
@@ -95,24 +95,24 @@ export function useVerovio(props, templateRef) {
         await scoreIsReady.promise;
         clearTimeout(redoLayoutTimeout);
         isLoading.value = true;
-        redoLayoutTimeout = setTimeout(() => {
+        redoLayoutTimeout = setTimeout(async () => {
             setVerovioOptions();
-            verovioToolkit.value.redoLayout();
+            await verovioToolkit.value.redoLayout();
             renderCurrentPage();
         }, 100);
     }
 
     async function loadScoreFile() {
         try {
-            await verovioToolkit.value.VerovioModule.ready;
+            await verovioToolkit.value.moduleIsReady();
             setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';
             if (!select.value || Object.keys(select.value).length !== 0 || Object.getPrototypeOf(select.value) !== Object.prototype) {
-                verovioToolkit.value.select(select.value);
+                await verovioToolkit.value.select(select.value);
             }
             // verovio wont throw on invlaid input files
-            verovioToolkit.value.loadData(data);
+            await verovioToolkit.value.loadData(data);
             scoreIsReady.resolve();
             message.value = 'Render current page with verovio';
             renderCurrentPage();
