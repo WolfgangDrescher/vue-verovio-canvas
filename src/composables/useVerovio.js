@@ -3,7 +3,7 @@ import createVerovioModule from 'verovio/wasm-hum';
 import { VerovioToolkit, LOG_WARNING as verovioLogLevelWarning, enableLog as verovioEnableLog } from 'verovio/esm';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
-import { useDeferred } from './useDeferred';
+import { Deferred } from '../classes/deferred';
 
 const defaultOptions = {
     scale: 40,
@@ -31,8 +31,8 @@ export function useVerovio(props, templateRef) {
     const isError = ref(false);
     const message = ref(null);
     const verovioToolkit = ref(null);
-    const scoreIsReady = useDeferred();
-    const verovioModuleIsReady = useDeferred();
+    const scoreIsReady = new Deferred();
+    const verovioModuleIsReady = new Deferred();
     let redoLayoutTimeout = null;
 
     const { page, nextPage, prevPage, setPage, renderCurrentPage } = useVerovioPagination(
