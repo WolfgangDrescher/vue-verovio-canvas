@@ -1,6 +1,7 @@
 {
   "name": "vue-verovio-canvas",
   "version": "0.0.0",
+  "description": "A Vue 3 component to display music scores with Verovio.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
