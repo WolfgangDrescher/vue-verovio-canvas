@@ -10,4 +10,19 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
     },
+    build: {
+        lib: {
+            entry: fileURLToPath(new URL('./src/index.js', import.meta.url)),
+            name: 'VueVerovioCanvas',
+            fileName: 'vue-verovio-canvas',
+        },
+        rollupOptions: {
+            external: ['vue'],
+            output: {
+                globals: {
+                    vue: 'Vue',
+                },
+            },
+        },
+    },
 });

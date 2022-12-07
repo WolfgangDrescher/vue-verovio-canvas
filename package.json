@@ -10,6 +10,19 @@
   "bugs": {
     "url": "https://github.com/WolfgangDrescher/vue-verovio-canvas/issues"
   },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue-verovio-canvas.umd.cjs",
+  "module": "./dist/vue-verovio-canvas.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-verovio-canvas.js",
+      "require": "./dist/vue-verovio-canvas.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
