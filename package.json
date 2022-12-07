@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.6.0",
-    "verovio": "^3.13.0"
+    "verovio": "^3.13.0",
+    "uuid": "^9.0.0"
   }
 }
