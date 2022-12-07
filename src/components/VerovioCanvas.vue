@@ -89,17 +89,16 @@ defineExpose({
     setPage,
 });
 
-if(props.lazy) {
+if (props.lazy) {
     const { stop } = useIntersectionObserver(verovioCanvas, ([{ isIntersecting }]) => {
-        if(isIntersecting === true) {
+        if (isIntersecting === true) {
             load();
             stop();
         }
-    })
+    });
 } else {
     load();
 }
-
 </script>
 
 <template>

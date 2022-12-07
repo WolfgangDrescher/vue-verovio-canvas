@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export function createWorkerVerovioToolkit(worker) {
     const tasks = {};
     worker.addEventListener('message', (event) => {
-        const { id, result } = event.data
+        const { id, result } = event.data;
         const deferred = tasks[id];
         if (deferred) {
             deferred.resolve(result);
