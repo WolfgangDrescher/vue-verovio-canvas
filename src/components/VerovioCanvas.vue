@@ -1,10 +1,14 @@
 <script setup>
-import { ref, toRefs } from 'vue';
+import { ref, toRefs, watch } from 'vue';
 import { useVerovio } from '../composables/useVerovio';
 import Loading from './Loading.vue';
 import { useIntersectionObserver } from '@vueuse/core';
 
 const props = defineProps({
+    toolkit: {
+        type: Object,
+        required: true,
+    },
     url: {
         type: String,
         required: false,
@@ -66,10 +70,14 @@ const {
     prevPage,
     setPage,
     load,
-} = useVerovio(
-    toRefs(props),
-    verovioCanvas
-);
+    setToolkit,
+} = useVerovio(toRefs(props), verovioCanvas);
+
+setToolkit(props.toolkit);
+
+watch(() => props.toolkit, (value) => {
+    setToolkit(value);
+});
 
 defineExpose({
     isLoading,

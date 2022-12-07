@@ -1,6 +1,4 @@
 import { ref, readonly, watch } from 'vue';
-import createVerovioModule from 'verovio/wasm-hum';
-import { VerovioToolkit, LOG_WARNING as verovioLogLevelWarning, enableLog as verovioEnableLog } from 'verovio/esm';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 import { Deferred } from '../classes/deferred';
@@ -45,11 +43,12 @@ export function useVerovio(props, templateRef) {
 
     message.value = 'Initializing Verovio WebAssembly runtime';
 
-    createVerovioModule().then(VerovioModule => {
-        verovioEnableLog(verovioLogLevelWarning, VerovioModule);
-        verovioToolkit.value = new VerovioToolkit(VerovioModule);
-        verovioModuleIsReady.resolve();
-    });
+    function setToolkit(toolkit) {
+        if (toolkit) {
+            verovioToolkit.value = toolkit;
+            verovioToolkit.value.moduleIsReady().then(() => verovioModuleIsReady.resolve());
+        }
+    }
 
     watch([scale, options, dimensions, viewMode], () => {
         redoLayout();
@@ -154,5 +153,6 @@ export function useVerovio(props, templateRef) {
         prevPage,
         setPage,
         load,
+        setToolkit,
     };
 }
