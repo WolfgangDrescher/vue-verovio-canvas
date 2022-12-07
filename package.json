@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/WolfgangDrescher/vue-verovio-canvas.git"
   },
+  "bugs": {
+    "url": "https://github.com/WolfgangDrescher/vue-verovio-canvas/issues"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
