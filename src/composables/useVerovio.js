@@ -1,4 +1,4 @@
-import { ref, readonly, watch } from 'vue';
+import { ref, readonly, watch, onUnmounted } from 'vue';
 import { useVerovioPagination } from './useVerovioPagination';
 import { useVerovioResizeObserver } from './useVerovioResizeObserver';
 import { Deferred } from '../classes/deferred';
@@ -141,6 +141,12 @@ export function useVerovio(props, templateRef) {
         await verovioModuleIsReady.promise;
         return await loadScoreFile();
     }
+
+    onUnmounted(async () => {
+        if(verovioToolkit.value) {
+            await verovioToolkit.value.removeToolkit();
+        }
+    });
 
     return {
         renderedScore: readonly(renderedScore),

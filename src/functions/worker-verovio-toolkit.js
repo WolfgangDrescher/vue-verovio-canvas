@@ -2,6 +2,7 @@ import { Deferred } from '../classes/deferred.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export function createWorkerVerovioToolkit(worker) {
+    const toolkitId = uuidv4();
     const tasks = {};
     worker.addEventListener('message', (event) => {
         const { id, result } = event.data;
@@ -16,6 +17,7 @@ export function createWorkerVerovioToolkit(worker) {
             return (...args) => {
                 const id = uuidv4();
                 worker.postMessage({
+                    toolkitId,
                     id,
                     method,
                     args,
