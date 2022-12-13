@@ -103,7 +103,7 @@ export function useVerovio(props, templateRef) {
 
     async function loadScoreFile() {
         try {
-            await verovioToolkit.value.moduleIsReady();
+            await verovioModuleIsReady.promise;
             await setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';
