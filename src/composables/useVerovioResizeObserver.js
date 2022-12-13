@@ -26,7 +26,7 @@ export function useVerovioResizeObserver(templateRef) {
             });
         }
     }
-    
+
     async function observe() {
         const elem = await elemDidMount.promise;
         if (resizeObserver) {

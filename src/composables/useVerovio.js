@@ -143,7 +143,7 @@ export function useVerovio(props, templateRef) {
     }
 
     onUnmounted(async () => {
-        if(verovioToolkit.value) {
+        if (verovioToolkit.value) {
             await verovioToolkit.value.removeToolkit();
         }
     });
