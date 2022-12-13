@@ -29,12 +29,14 @@ export function useVerovio(props, templateRef) {
     const isError = ref(false);
     const message = ref(null);
     const verovioToolkit = ref(null);
-    const verovioToolkitIsReady = new Deferred();
+    const scoreIsReady = new Deferred();
+    const verovioModuleIsReady = new Deferred();
     let redoLayoutTimeout = null;
 
     const { page, nextPage, prevPage, setPage, renderCurrentPage } = useVerovioPagination(
         verovioToolkit,
         renderedScore,
+        scoreIsReady,
         isLoading
     );
     const { observe, dimensions } = useVerovioResizeObserver(templateRef);
@@ -44,7 +46,7 @@ export function useVerovio(props, templateRef) {
     function setToolkit(toolkit) {
         if (toolkit) {
             verovioToolkit.value = toolkit;
-            verovioToolkitIsReady.resolve();
+            verovioToolkit.value.moduleIsReady().then(() => verovioModuleIsReady.resolve());
         }
     }
 
@@ -61,6 +63,7 @@ export function useVerovio(props, templateRef) {
     }
 
     async function callVerovioMethod(methodName, ...args) {
+        await scoreIsReady.promise;
         return await verovioToolkit.value[methodName](...args);
     }
 
@@ -88,7 +91,7 @@ export function useVerovio(props, templateRef) {
     }
 
     async function redoLayout() {
-        await verovioToolkitIsReady.promise;
+        await scoreIsReady.promise;
         clearTimeout(redoLayoutTimeout);
         isLoading.value = true;
         redoLayoutTimeout = setTimeout(async () => {
@@ -100,7 +103,7 @@ export function useVerovio(props, templateRef) {
 
     async function loadScoreFile() {
         try {
-            await verovioToolkitIsReady.promise;
+            await verovioModuleIsReady.promise;
             await setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';
@@ -109,6 +112,7 @@ export function useVerovio(props, templateRef) {
             }
             // verovio wont throw on invlaid input files
             await verovioToolkit.value.loadData(data);
+            scoreIsReady.resolve();
             message.value = 'Render current page with verovio';
             await renderCurrentPage();
             observe();
@@ -134,6 +138,7 @@ export function useVerovio(props, templateRef) {
     }
 
     async function load() {
+        await verovioModuleIsReady.promise;
         return await loadScoreFile();
     }
 
