@@ -95,7 +95,7 @@ export function useVerovio(props, templateRef) {
         clearTimeout(redoLayoutTimeout);
         isLoading.value = true;
         redoLayoutTimeout = setTimeout(async () => {
-            setVerovioOptions();
+            await setVerovioOptions();
             await verovioToolkit.value.redoLayout();
             renderCurrentPage();
         }, 100);
@@ -104,7 +104,7 @@ export function useVerovio(props, templateRef) {
     async function loadScoreFile() {
         try {
             await verovioToolkit.value.moduleIsReady();
-            setVerovioOptions();
+            await setVerovioOptions();
             const data = await getData();
             message.value = 'Load score with verovio';
             if (!select.value || Object.keys(select.value).length !== 0 || Object.getPrototypeOf(select.value) !== Object.prototype) {
