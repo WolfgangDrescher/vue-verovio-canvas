@@ -97,7 +97,7 @@ export function useVerovio(props, templateRef) {
         redoLayoutTimeout = setTimeout(async () => {
             await setVerovioOptions();
             await verovioToolkit.value.redoLayout();
-            renderCurrentPage();
+            await renderCurrentPage();
         }, 100);
     }
 
@@ -114,7 +114,7 @@ export function useVerovio(props, templateRef) {
             await verovioToolkit.value.loadData(data);
             scoreIsReady.resolve();
             message.value = 'Render current page with verovio';
-            renderCurrentPage();
+            await renderCurrentPage();
         } catch (e) {
             isError.value = true;
             message.value = `Cannot display score with verovio (${e.message})`;
