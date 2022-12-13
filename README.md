@@ -20,7 +20,7 @@ How to use a web worker requires a somewhat advanced setup. And a bundler like
 
 composables/verovio-worker.js:
 
-```vue
+```js
 import { defineStore } from 'pinia';
 import createVerovioWorker from '../workers/verovio.js?worker';
 
@@ -31,7 +31,6 @@ export const useVerovioWorker = defineStore('verovio_worker', {
         };
     },
 });
-
 ```
 
 workers/verovio.js:
