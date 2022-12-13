@@ -39,7 +39,7 @@ export function useVerovio(props, templateRef) {
         scoreIsReady,
         isLoading
     );
-    const { dimensions } = useVerovioResizeObserver(templateRef);
+    const { observe, dimensions } = useVerovioResizeObserver(templateRef);
 
     message.value = 'Initializing Verovio WebAssembly runtime';
 
@@ -115,6 +115,7 @@ export function useVerovio(props, templateRef) {
             scoreIsReady.resolve();
             message.value = 'Render current page with verovio';
             await renderCurrentPage();
+            observe();
         } catch (e) {
             isError.value = true;
             message.value = `Cannot display score with verovio (${e.message})`;
