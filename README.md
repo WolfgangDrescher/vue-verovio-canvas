@@ -16,7 +16,7 @@ npm i vue-verovio-canvas verovio
 ## Usage with a web worker
 
 How to use a web worker requires a somewhat advanced setup. And a bundler like
-[Vite] (https://vitejs.dev/) to get access to the web worker.
+[Vite](https://vitejs.dev/) to get access to the web worker.
 
 composables/verovio-worker.js:
 
