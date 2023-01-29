@@ -55,7 +55,7 @@ const toolkit = createWorkerVerovioToolkit(verovioWorker);
 </script>
 
 <template>
-    <VerovioCanvas v-bind="{ ...$attrs, ...$props }" :toolkit="toolkit" />
+    <VerovioCanvas :toolkit="toolkit" />
 </template>
 ```
 
@@ -77,7 +77,7 @@ createVerovioModule().then(VerovioModule => {
 </script>
 
 <template>
-    <VerovioCanvas v-bind="{ ...$attrs, ...$props }" :toolkit="toolkit" />
+    <VerovioCanvas :toolkit="toolkit" />
 </template>
 ```
 
@@ -222,6 +222,6 @@ const AsyncVerovioCanvas = defineAsyncComponent(() => import('vue-verovio-canvas
 </script>
 
 <template>
-    <component :is="AsyncVerovioCanvas" v-bind="{...$attrs, ...$props}"></component>
+    <component :is="AsyncVerovioCanvas"></component>
 </template>
 ```
