@@ -1,5 +1,3 @@
-import { Deferred } from '../classes/deferred.js';
-
 export function createVerovioWorker(createVerovioModule, VerovioToolkit, enableLog, logLevel) {
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
 
