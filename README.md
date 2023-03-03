@@ -20,6 +20,10 @@ How to use a web worker requires a somewhat advanced setup. And a bundler like
 
 ### composables/verovio-worker.js:
 
+If you want to use the VerovioCanvas in several places in your project, it is
+best to save the verovio worker in a pinia store. Otherwiese, you can import it
+directly where you need it.
+
 ```js
 import { defineStore } from 'pinia';
 import createVerovioWorker from '../workers/verovio.js?worker';
