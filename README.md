@@ -63,6 +63,26 @@ const toolkit = createWorkerVerovioToolkit(verovioWorker);
 </template>
 ```
 
+### vite.config.js 
+
+To set up the web worker as an ES module, the following Vite configuration is required:
+
+```js
+import { defineConfig } from 'vite';
+export default defineConfig({
+    //...
+    worker: {
+        format: 'es',
+    },
+});
+```
+
+Note that worker modules are currently (March 2023) not support in Firefox. But
+it looks like Firefox version 111 will implement this:
+https://bugzilla.mozilla.org/show_bug.cgi?id=1247687,
+https://github.com/mdn/content/issues/24402,
+https://github.com/mdn/content/pull/25030.
+
 ## Basic usage
 
 ### components/VerovioCanvas.vue:
