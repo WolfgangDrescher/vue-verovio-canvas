@@ -77,8 +77,9 @@ export default defineConfig({
 });
 ```
 
-Note that worker modules are currently (March 2023) not support in Firefox. But
-it looks like Firefox version 111 will implement this:
+Note that worker modules are currently (March 2023) not support in Firefox
+(https://caniuse.com/mdn-api_worker_worker_ecmascript_modules). But it looks
+like Firefox version 111 will implement this:
 https://bugzilla.mozilla.org/show_bug.cgi?id=1247687,
 https://github.com/mdn/content/issues/24402,
 https://github.com/mdn/content/pull/25030.
