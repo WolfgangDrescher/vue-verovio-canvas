@@ -18,7 +18,7 @@ npm i vue-verovio-canvas verovio
 How to use a web worker requires a somewhat advanced setup. And a bundler like
 [Vite](https://vitejs.dev/) to get access to the web worker.
 
-composables/verovio-worker.js:
+### composables/verovio-worker.js:
 
 ```js
 import { defineStore } from 'pinia';
@@ -33,7 +33,7 @@ export const useVerovioWorker = defineStore('verovio_worker', {
 });
 ```
 
-workers/verovio.js:
+### workers/verovio.js:
 
 ```js
 import createVerovioModule from 'verovio/wasm'; // use verovio/wasm-hum for humdrum support
@@ -43,7 +43,7 @@ import { createVerovioWorker } from 'vue-verovio-canvas';
 createVerovioWorker(createVerovioModule, VerovioToolkit, enableLog, logLevel);
 ```
 
-components/VerovioCanvas.vue:
+### components/VerovioCanvas.vue:
 
 ```vue
 <script setup>
@@ -61,7 +61,7 @@ const toolkit = createWorkerVerovioToolkit(verovioWorker);
 
 ## Basic usage
 
-components/VerovioCanvas.vue:
+### components/VerovioCanvas.vue:
 
 ```vue
 <script setup>
