@@ -65,6 +65,8 @@ const {
     message,
     dimensions,
     page,
+    verovioModuleIsReady,
+    scoreIsReady,
     callVerovioMethod,
     nextPage,
     prevPage,
@@ -72,6 +74,21 @@ const {
     load,
     setToolkit,
 } = useVerovio(toRefs(props), verovioCanvas);
+
+const emit = defineEmits(['moduleIsReady', 'scoreIsReady']);
+
+verovioModuleIsReady.promise.then(() => {
+    emit('moduleIsReady', {
+        callVerovioMethod,
+    });
+});
+
+
+scoreIsReady.promise.then(() => {
+    emit('scoreIsReady', {
+        callVerovioMethod,
+    });
+});
 
 setToolkit(props.toolkit);
 

@@ -149,6 +149,8 @@ export function useVerovio(props, templateRef) {
     });
 
     return {
+        verovioModuleIsReady,
+        scoreIsReady,
         renderedScore: readonly(renderedScore),
         page: readonly(page),
         isLoading: readonly(isLoading),
