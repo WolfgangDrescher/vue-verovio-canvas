@@ -1,8 +1,7 @@
 <script setup>
-import VerovioCanvas from './components/VerovioCanvas.vue';
-import { createWorkerVerovioToolkit } from './functions/worker-verovio-toolkit.js';
+import VerovioCanvasWrapper from './VerovioCanvasWrapper.vue';
 import createVerovioWorker from './verovio-worker.js?worker';
-const toolkit = createWorkerVerovioToolkit(createVerovioWorker());;
+const worker = createVerovioWorker();
 
 const kernScore = `**kern	**kern	**kern
 *staff3	*staff2	*staff1
@@ -57,6 +56,6 @@ const kernScore = `**kern	**kern	**kern
 </script>
 
 <template>
-    <VerovioCanvas url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" :toolkit="toolkit" />
-    <VerovioCanvas :data="kernScore" :toolkit="toolkit" />
+    <VerovioCanvasWrapper :worker="worker" lazy url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" />
+    <VerovioCanvasWrapper :worker="worker" lazy :data="kernScore" />
 </template>
