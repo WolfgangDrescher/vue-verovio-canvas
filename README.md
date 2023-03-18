@@ -244,6 +244,42 @@ onMounted(() => {
 
 ```
 
+## Manually load and unload toolkit
+
+When you have a lot of scores per page that need to be rendered with verovio it
+might be useful to not only lazy load the component, but also only create the
+toolkit when the component is actually needed and within the viewport and detroy
+the toolkit when it is outside of the viewport. Use in combination with `lazy`
+and `lazyDelay` props.
+
+### components/VerovioCanvas.vue:
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import 'vue-verovio-canvas/style.css';
+import { VerovioCanvas, createWorkerVerovioToolkit } from 'vue-verovio-canvas';
+
+const toolkit = ref();
+const { verovioWorker } = useVerovioWorker();
+
+function loadToolkit() {
+    toolkit.value = createWorkerVerovioToolkit(verovioWorker);
+}
+
+function unloadToolkit() {
+    if (toolkit.value) {
+        toolkit.value.removeToolkit();
+        toolkit.value = null;
+    }
+}
+</script>
+
+<template>
+    <VerovioCanvas :toolkit="toolkit" lazy unload :load-delay="1000" @load="loadToolkit" @unload="unloadToolkit" />
+</template>
+```
+
 ## Avoid use with SSR
 
 Errors may occur when the component is loaded with server side rendering. Try to
