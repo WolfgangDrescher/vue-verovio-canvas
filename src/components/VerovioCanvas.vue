@@ -57,7 +57,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    loadDebounceDuration: {
+    loadDelay: {
         type: Number,
         default: 0,
     },
@@ -129,7 +129,7 @@ if (props.lazy) {
         if (isIntersecting === true) {
             debouncedTimeout = setTimeout(() => {
                 loadToolkit(stop);
-            }, props.loadDebounceDuration);
+            }, props.loadDelay);
         } else if (props.unload) {
             clearTimeout(debouncedTimeout);
             unobserve();
