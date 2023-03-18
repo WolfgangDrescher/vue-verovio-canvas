@@ -85,6 +85,11 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=1247687,
 https://github.com/mdn/content/issues/24402,
 https://github.com/mdn/content/pull/25030.
 
+If you need to support Firefox it's recommended to setup your own worker file
+and not import `import { createVerovioWorker } from 'vue-verovio-canvas';` as
+Firefox will throw an error `import declarations may only appear at top level of
+a module. Use `importScripts()` instead.
+
 ## Basic usage
 
 ### components/VerovioCanvas.vue:
