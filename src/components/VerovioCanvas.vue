@@ -131,6 +131,7 @@ if (props.lazy) {
         }
     });
 } else {
+    emit('load');
     load();
 }
 </script>
