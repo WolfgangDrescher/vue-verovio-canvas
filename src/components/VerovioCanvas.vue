@@ -57,7 +57,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    loadDelay: {
+    lazyDelay: {
         type: Number,
         default: 0,
     },
@@ -123,7 +123,7 @@ if (props.lazy) {
                 if (!props.unload) {
                     stop();
                 }
-            }, props.loadDelay);
+            }, props.lazyDelay);
         } else if (props.unload) {
             clearTimeout(debouncedTimeout);
             unobserve();
