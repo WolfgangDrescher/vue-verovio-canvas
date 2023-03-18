@@ -120,6 +120,15 @@ createVerovioModule().then(VerovioModule => {
 | lazy       | `false`    | Lazy load verovio score when visible on screen                                                              |
 | toolkit    | –          | A `createWorkerVerovioToolkit` or `createAsyncVerovioToolkit` instance                                      |
 
+## Emitted Events
+
+| Event           | Description                                                                       |
+|-----------------|-----------------------------------------------------------------------------------|
+| `moduleIsReady` | Emitted when the emscripten module is ready                                       |
+| `scoreIsReady`  | Emitted when verovio toolkit method `loadData` did load the score                 |
+| `load`          | Emitted when `lazy` prop is `true` and component is intersecting with viewport    |
+| `unload`        | Emitted when `lazy` prop is `true` and component stops intersecting with viewport |
+
 ## Info
 
 If you want to display the whole score at once with the available width of the
