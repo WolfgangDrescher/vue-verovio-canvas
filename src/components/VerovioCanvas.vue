@@ -113,22 +113,16 @@ defineExpose({
     setPage,
 });
 
-function loadToolkit(stop) {
-    emit('load');
-    if (!props.toolkit) {
-        load();
-    }
-    if (!props.unload) {
-        stop();
-    }
-}
-
 if (props.lazy) {
     let debouncedTimeout = null;
     const { stop } = useIntersectionObserver(verovioCanvas, ([{ isIntersecting }]) => {
         if (isIntersecting === true) {
             debouncedTimeout = setTimeout(() => {
-                loadToolkit(stop);
+                emit('load');
+                load();
+                if (!props.unload) {
+                    stop();
+                }
             }, props.loadDelay);
         } else if (props.unload) {
             clearTimeout(debouncedTimeout);
