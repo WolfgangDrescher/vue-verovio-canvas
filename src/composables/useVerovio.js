@@ -39,7 +39,7 @@ export function useVerovio(props, templateRef) {
         scoreIsReady,
         isLoading
     );
-    const { observe, dimensions } = useVerovioResizeObserver(templateRef);
+    const { observe, unobserve, dimensions } = useVerovioResizeObserver(templateRef);
 
     message.value = 'Initializing Verovio WebAssembly runtime';
 
@@ -163,5 +163,7 @@ export function useVerovio(props, templateRef) {
         setPage,
         load,
         setToolkit,
+        observe,
+        unobserve,
     };
 }

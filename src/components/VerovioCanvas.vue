@@ -7,7 +7,6 @@ import { useIntersectionObserver } from '@vueuse/core';
 const props = defineProps({
     toolkit: {
         type: Object,
-        required: true,
     },
     url: {
         type: String,
@@ -54,6 +53,14 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    unload: {
+        type: Boolean,
+        default: false,
+    },
+    loadDebounceDuration: {
+        type: Number,
+        default: 0,
+    },
 });
 
 const verovioCanvas = ref(null);
@@ -73,16 +80,16 @@ const {
     setPage,
     load,
     setToolkit,
+    unobserve,
 } = useVerovio(toRefs(props), verovioCanvas);
 
-const emit = defineEmits(['moduleIsReady', 'scoreIsReady']);
+const emit = defineEmits(['moduleIsReady', 'scoreIsReady', 'load', 'unload']);
 
 verovioModuleIsReady.promise.then(() => {
     emit('moduleIsReady', {
         callVerovioMethod,
     });
 });
-
 
 scoreIsReady.promise.then(() => {
     emit('scoreIsReady', {
@@ -106,11 +113,27 @@ defineExpose({
     setPage,
 });
 
+function loadToolkit(stop) {
+    emit('load');
+    if (!props.toolkit) {
+        load();
+    }
+    if (!props.unload) {
+        stop();
+    }
+}
+
 if (props.lazy) {
+    let debouncedTimeout = null;
     const { stop } = useIntersectionObserver(verovioCanvas, ([{ isIntersecting }]) => {
         if (isIntersecting === true) {
-            load();
-            stop();
+            debouncedTimeout = setTimeout(() => {
+                loadToolkit(stop);
+            }, props.loadDebounceDuration);
+        } else if (props.unload) {
+            clearTimeout(debouncedTimeout);
+            unobserve();
+            emit('unload');
         }
     });
 } else {
