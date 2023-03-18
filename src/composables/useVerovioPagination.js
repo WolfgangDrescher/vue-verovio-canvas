@@ -1,6 +1,6 @@
 import { ref, readonly, watch } from 'vue';
 
-export function useVerovioPagination(verovioToolkit, renderedScore, scoreIsReady, isLoading) {
+export function useVerovioPagination(verovioToolkit, renderedScore, scoreIsReady, isLoading, rerender) {
     const page = ref(1);
 
     let renderCurrentPageTimeout = null;
@@ -45,6 +45,7 @@ export function useVerovioPagination(verovioToolkit, renderedScore, scoreIsReady
     async function setRenderedScoreToPage(p) {
         renderedScore.value = await verovioToolkit.value.renderToSVG(p);
         isLoading.value = false;
+        rerender.value = false;
     }
 
     return {
