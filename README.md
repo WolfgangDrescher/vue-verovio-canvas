@@ -108,17 +108,19 @@ createVerovioModule().then(VerovioModule => {
 
 ## Props
 
-| Prop       | Default    | Description                                                                                                 |
-|------------|------------|-------------------------------------------------------------------------------------------------------------|
-| url        | –          | URL of the score file to display                                                                            |
-| data       | –          | String of the score to display when url prop is not set                                                     |
-| scale      | `40`       | Scale of the output in percent (min: 1; max: 1000) and fallback value for `options.scale`                   |
-| viewMode   | `vertical` | `page`, `horizontal`, `vertical`                                                                            |
-| pageMargin | `0`        | Change all page margins at once and fallback value when top, right, left or bottom page margins are not set |
-| options    | –          | Pass options to verovio; Use `verovio -h` in the CLI to check all options and values                        |
-| select     | `{}`       | Select a portion of a score; e.g. `{measureRange: '8-end'}`, `{start: 'measure-L337', end: 'measure-L355'}` |
-| lazy       | `false`    | Lazy load verovio score when visible on screen                                                              |
-| toolkit    | –          | A `createWorkerVerovioToolkit` or `createAsyncVerovioToolkit` instance                                      |
+| Prop       | Default    | Description                                                                                                                                                                              |
+|------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| url        | –          | URL of the score file to display                                                                                                                                                         |
+| data       | –          | String of the score to display when url prop is not set                                                                                                                                  |
+| scale      | `40`       | Scale of the output in percent (min: 1; max: 1000) and fallback value for `options.scale`                                                                                                |
+| viewMode   | `vertical` | `page`, `horizontal`, `vertical`                                                                                                                                                         |
+| pageMargin | `0`        | Change all page margins at once and fallback value when top, right, left or bottom page margins are not set                                                                              |
+| options    | –          | Pass options to verovio; Use `verovio -h` in the CLI to check all options and values                                                                                                     |
+| select     | `{}`       | Select a portion of a score; e.g. `{measureRange: '8-end'}`, `{start: 'measure-L337', end: 'measure-L355'}`                                                                              |
+| lazy       | `false`    | Lazy load verovio score when visible on screen                                                                                                                                           |
+| toolkit    | –          | A `createWorkerVerovioToolkit` or `createAsyncVerovioToolkit` instance                                                                                                                   |
+| unload     | `false`    | Emits unload event when `VerovioCanvas` component is not intersecting with the viewport; loading and unloading the toolkit needs to be handled manually (see `load` and `unload` events) |
+| loadDelay  | `0`        | Delay before lazy loading the score to prevent always loading the toolkit with fast scrolling                                                                                            |
 
 ## Emitted Events
 
