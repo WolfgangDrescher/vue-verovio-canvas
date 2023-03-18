@@ -1,9 +1,21 @@
+import { Deferred } from './../classes/deferred.js';
+
 export function createVerovioWorker(createVerovioModule, VerovioToolkit, enableLog, logLevel) {
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
 
         const verovioToolkits = {};
+        let verovioModulePromise;
 
-        const verovioModulePromise = createVerovioModule();
+        if (typeof createVerovioModule === 'function') {
+            verovioModulePromise = createVerovioModule();
+        } else {
+            const verovioModuleIsReady = new Deferred();
+            verovioModulePromise = verovioModuleIsReady.promise;
+            createVerovioModule.onRuntimeInitialized = function() {
+                verovioModuleIsReady.resolve(createVerovioModule);
+            }
+        }
+
         verovioModulePromise.then(VerovioModule => {
             if (enableLog) {
                 enableLog(logLevel, VerovioModule);
