@@ -65,7 +65,8 @@ const toolkit = createWorkerVerovioToolkit(verovioWorker);
 
 ### vite.config.js 
 
-To set up the web worker as an ES module, the following Vite configuration is required:
+To set up the web worker as an ES module, the following Vite configuration is
+required:
 
 ```js
 import { defineConfig } from 'vite';
@@ -175,7 +176,8 @@ defineExpose({
 });
 ```
 
-These exposed variables and methods can be used to interact with the `VerovioCanvas` component:
+These exposed variables and methods can be used to interact with the
+`VerovioCanvas` component:
 
 ```vue
 <script setup>
@@ -221,8 +223,9 @@ const page = computed({
 
 ## Custom Verovio method calls
 
-Use `callVerovioMethod` to call other methods on the Verovio toolkit instance. `callVerovioMethod` is async
-to ensure that the Verovio runtime is initialized and the score if already loaded.
+Use `callVerovioMethod` to call other methods on the Verovio toolkit instance.
+`callVerovioMethod` is async to ensure that the Verovio runtime is initialized
+and the score if already loaded.
 
 ```vue
 <script setup>
