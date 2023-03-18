@@ -11,12 +11,12 @@ export function createVerovioWorker(createVerovioModule, VerovioToolkit, enableL
         } else {
             const verovioModuleIsReady = new Deferred();
             verovioModulePromise = verovioModuleIsReady.promise;
-            createVerovioModule.onRuntimeInitialized = function() {
+            createVerovioModule.onRuntimeInitialized = function () {
                 verovioModuleIsReady.resolve(createVerovioModule);
-            }
+            };
         }
 
-        verovioModulePromise.then(VerovioModule => {
+        verovioModulePromise.then((VerovioModule) => {
             if (enableLog) {
                 enableLog(logLevel, VerovioModule);
             }

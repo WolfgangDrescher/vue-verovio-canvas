@@ -116,7 +116,7 @@ export function useVerovio(props, templateRef) {
             // verovio wont throw on invlaid input files
             await verovioToolkit.value.loadData(data);
             scoreIsReady.resolve();
-            if(rerender.value) {
+            if (rerender.value) {
                 message.value = 'Render current page with verovio';
                 await renderCurrentPage();
             }
