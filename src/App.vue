@@ -53,9 +53,17 @@ const kernScore = `**kern	**kern	**kern
 8GJ	.	.
 *-	*-	*-
 `;
+
+function moduleIsReady() {
+    console.log('moduleIsReady');
+}
+
+function scoreIsReady() {
+    console.log('scoreIsReady');
+}
 </script>
 
 <template>
-    <VerovioCanvasWrapper :worker="worker" lazy url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" />
-    <VerovioCanvasWrapper :worker="worker" lazy :data="kernScore" />
+    <VerovioCanvasWrapper :worker="worker" lazy unload :load-delay="1000" url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" @module-is-ready="moduleIsReady" @score-is-ready="scoreIsReady" />
+    <VerovioCanvasWrapper :worker="worker" lazy unload :load-delay="1000" :data="kernScore" @module-is-ready="moduleIsReady" @score-is-ready="scoreIsReady" />
 </template>
