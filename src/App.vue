@@ -51,8 +51,7 @@ const kernScore = `**kern	**kern	**kern
 16BB-	.	.
 16GG	.	.
 8GJ	.	.
-*-	*-	*-
-`;
+*-	*-	*-`;
 
 function moduleIsReady() {
     console.log('moduleIsReady');
