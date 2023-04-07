@@ -90,6 +90,7 @@ export function useVerovio(props, templateRef) {
             opt.breaks = 'none';
             opt.pageWidth = 60000;
         }
+        opt.svgViewBox = true;
         return opt;
     }
 
