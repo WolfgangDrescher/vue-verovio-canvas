@@ -32,10 +32,10 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@vitejs/plugin-vue": "^4.0.0",
-    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-prettier": "^8.0.0",
     "eslint": "^8.24.0",
     "eslint-plugin-vue": "^9.5.1",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.3",
     "verovio": "^4.0.0",
     "vite": "^4.1.4",
     "vue": "^3.2.39"
@@ -45,7 +45,7 @@
     "vue": "^3.2.39"
   },
   "dependencies": {
-    "@vueuse/core": "^9.6.0",
+    "@vueuse/core": "^10.4.1",
     "uuid": "^9.0.0"
   }
 }
