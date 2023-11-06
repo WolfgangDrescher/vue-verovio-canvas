@@ -75,6 +75,9 @@ export default defineConfig({
     worker: {
         format: 'es',
     },
+    optimizeDeps: {
+        exclude: ['verovio'],
+    },
 });
 ```
 
@@ -89,6 +92,10 @@ If you need to support Firefox it's recommended to setup your own worker file
 and not import `import { createVerovioWorker } from 'vue-verovio-canvas';` as
 Firefox will throw an error `import declarations may only appear at top level of
 a module. Use `importScripts()` instead.
+
+Since Vite 4.3 it is necessary to exclude Verovio from `optimizeDeps` in your
+Vite config. For further information, have a look at
+https://github.com/vitejs/vite/issues/13530
 
 ## Basic usage
 
