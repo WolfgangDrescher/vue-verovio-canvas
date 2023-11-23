@@ -18,11 +18,13 @@ export function useVerovioResizeObserver(templateRef) {
 
     function initResizeObserver(elem) {
         if (elem instanceof HTMLElement) {
-            dimensions.width = elem.clientWidth;
-            dimensions.height = elem.clientHeight;
+            const { width, height } = elem.getBoundingClientRect();
+            dimensions.width = Math.floor(width);
+            dimensions.height = Math.floor(height);
             resizeObserver = new ResizeObserver(([entry]) => {
-                dimensions.width = entry.target.clientWidth;
-                dimensions.height = entry.target.clientHeight;
+                const { width: targetWidth, height: targetHeight } = entry.target.getBoundingClientRect();
+                dimensions.width = Math.floor(targetWidth);
+                dimensions.height = Math.floor(targetHeight);
             });
         }
     }
