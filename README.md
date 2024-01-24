@@ -141,6 +141,7 @@ createVerovioModule().then(VerovioModule => {
 |-----------------|-----------------------------------------------------------------------------------|
 | `moduleIsReady` | Emitted when the emscripten module is ready                                       |
 | `scoreIsReady`  | Emitted when verovio toolkit method `loadData` did load the score                 |
+| `scoreLoaded`   | Emitted directly after the score is loaded with Verovios `loadData` method        |
 | `load`          | Emitted when `lazy` prop is `true` and component is intersecting with viewport    |
 | `unload`        | Emitted when `lazy` prop is `true` and component stops intersecting with viewport |
 
