@@ -57,7 +57,7 @@ export function useVerovio(props, templateRef) {
         redoLayout();
     });
 
-    watch(data, () => {
+    watch([url, data, select], () => {
         rerender.value = true;
         loadScoreFile();
     });
