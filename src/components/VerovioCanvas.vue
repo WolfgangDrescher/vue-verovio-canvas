@@ -74,8 +74,6 @@ const {
     message,
     dimensions,
     page,
-    verovioModuleIsReady,
-    scoreIsReady,
     callVerovioMethod,
     nextPage,
     prevPage,
