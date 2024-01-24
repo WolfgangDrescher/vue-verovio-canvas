@@ -52,7 +52,7 @@ export function useVerovio(props, templateRef) {
         }
     }
 
-    watch([scale, options, dimensions, viewMode], () => {
+    watch([scale, options, dimensions, viewMode, pageMargin], () => {
         rerender.value = true;
         redoLayout();
     });
