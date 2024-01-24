@@ -65,6 +65,8 @@ const props = defineProps({
 
 const verovioCanvas = ref(null);
 
+const emit = defineEmits(['moduleIsReady', 'scoreIsReady', 'load', 'unload']);
+
 const {
     isLoading,
     isError,
@@ -81,21 +83,7 @@ const {
     load,
     setToolkit,
     unobserve,
-} = useVerovio(toRefs(props), verovioCanvas);
-
-const emit = defineEmits(['moduleIsReady', 'scoreIsReady', 'load', 'unload']);
-
-verovioModuleIsReady.promise.then(() => {
-    emit('moduleIsReady', {
-        callVerovioMethod,
-    });
-});
-
-scoreIsReady.promise.then(() => {
-    emit('scoreIsReady', {
-        callVerovioMethod,
-    });
-});
+} = useVerovio(toRefs(props), verovioCanvas, emit);
 
 setToolkit(props.toolkit);
 

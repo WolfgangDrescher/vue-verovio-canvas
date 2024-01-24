@@ -13,7 +13,7 @@ const defaultOptions = {
     footer: 'none',
 };
 
-export function useVerovio(props, templateRef) {
+export function useVerovio(props, templateRef, emit) {
     const {
         url,
         data,
@@ -153,6 +153,18 @@ export function useVerovio(props, templateRef) {
         if (verovioToolkit.value) {
             await verovioToolkit.value.removeToolkit();
         }
+    });
+
+    verovioModuleIsReady.promise.then(() => {
+        emit('moduleIsReady', {
+            callVerovioMethod,
+        });
+    });
+
+    scoreIsReady.promise.then(() => {
+        emit('scoreIsReady', {
+            callVerovioMethod,
+        });
     });
 
     return {
