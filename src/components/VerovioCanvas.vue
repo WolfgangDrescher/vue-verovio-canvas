@@ -65,7 +65,7 @@ const props = defineProps({
 
 const verovioCanvas = ref(null);
 
-const emit = defineEmits(['moduleIsReady', 'scoreIsReady', 'load', 'unload']);
+const emit = defineEmits(['moduleIsReady', 'scoreIsReady', 'load', 'unload', 'scoreLoaded']);
 
 const {
     isLoading,
