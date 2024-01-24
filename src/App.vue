@@ -60,9 +60,13 @@ function moduleIsReady() {
 function scoreIsReady() {
     console.log('scoreIsReady');
 }
+
+function scoreLoaded() {
+    console.log('scoreLoaded');
+}
 </script>
 
 <template>
-    <VerovioCanvasWrapper :worker="worker" lazy unload :lazy-delay="1000" url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" @module-is-ready="moduleIsReady" @score-is-ready="scoreIsReady" />
-    <VerovioCanvasWrapper :worker="worker" lazy unload :lazy-delay="1000" :data="kernScore" @module-is-ready="moduleIsReady" @score-is-ready="scoreIsReady" />
+    <VerovioCanvasWrapper :worker="worker" lazy unload :lazy-delay="1000" url="https://raw.githubusercontent.com/WolfgangDrescher/lassus-geistliche-psalmen/master/kern/01-beatus-vir.krn" @module-is-ready="moduleIsReady" @score-is-ready="scoreIsReady" @score-loaded="scoreLoaded" />
+    <VerovioCanvasWrapper :worker="worker" lazy unload :lazy-delay="1000" :data="kernScore" @module-is-ready="moduleIsReady" @score-is-ready="scoreIsReady" @score-loaded="scoreLoaded" />
 </template>
