@@ -5,7 +5,7 @@
   "author": "Wolfgang Drescher",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WolfgangDrescher/vue-verovio-canvas.git"
+    "url": "git+https://github.com/WolfgangDrescher/vue-verovio-canvas.git"
   },
   "bugs": {
     "url": "https://github.com/WolfgangDrescher/vue-verovio-canvas/issues"
