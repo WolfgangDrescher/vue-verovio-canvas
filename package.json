@@ -30,22 +30,22 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.2.0",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "@vue/eslint-config-prettier": "^8.0.0",
-    "eslint": "^8.24.0",
-    "eslint-plugin-vue": "^9.5.1",
-    "prettier": "^3.0.3",
-    "verovio": "^4.0.0",
+    "@rushstack/eslint-patch": "^1.6.0",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/eslint-config-prettier": "^10.0.0",
+    "eslint": "^9.12.0",
+    "eslint-plugin-vue": "^9.18.1",
+    "prettier": "^3.1.0",
+    "verovio": "^4.3.1",
     "vite": "^5.0.2",
-    "vue": "^3.2.39"
+    "vue": "^3.5.0"
   },
   "peerDependencies": {
     "verovio": "^3.15.0 || ^4.0.0",
-    "vue": "^3.2.39"
+    "vue": "^3.2.0"
   },
   "dependencies": {
-    "@vueuse/core": "^10.4.1",
-    "uuid": "^9.0.0"
+    "@vueuse/core": "^11.1.0",
+    "uuid": "^10.0.0"
   }
 }
