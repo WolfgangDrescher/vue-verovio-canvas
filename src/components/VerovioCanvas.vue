@@ -1,5 +1,5 @@
 <script setup>
-import { ref, toRefs, watch } from 'vue';
+import { ref, toRefs, watchEffect } from 'vue';
 import { useVerovio } from '../composables/useVerovio';
 import Loading from './Loading.vue';
 import { useIntersectionObserver } from '@vueuse/core';
@@ -85,8 +85,8 @@ const {
 
 setToolkit(props.toolkit);
 
-watch(() => props.toolkit, (value) => {
-    setToolkit(value);
+watchEffect(() => {
+    setToolkit(props.toolkit);
 });
 
 defineExpose({
