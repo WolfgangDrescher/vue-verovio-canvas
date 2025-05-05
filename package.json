@@ -21,7 +21,7 @@
       "import": "./dist/vue-verovio-canvas.js",
       "require": "./dist/vue-verovio-canvas.umd.cjs"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/vue-verovio-canvas.css"
   },
   "scripts": {
     "dev": "vite --config vite.demo.config.js",
