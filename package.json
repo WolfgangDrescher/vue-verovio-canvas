@@ -1,6 +1,6 @@
 {
   "name": "vue-verovio-canvas",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "A Vue 3 component to display music scores with Verovio.",
   "author": "Wolfgang Drescher",
   "repository": {
