@@ -5,10 +5,6 @@ import { Deferred } from '../classes/deferred';
 
 const defaultOptions = {
     scale: 40,
-    pageMarginTop: 0,
-    pageMarginRight: 0,
-    pageMarginBottom: 0,
-    pageMarginLeft: 0,
     header: 'none',
     footer: 'none',
 };
@@ -78,10 +74,10 @@ export function useVerovio(props, templateRef, emit) {
         Object.assign(opt, {
             pageWidth: Math.min(Math.max(dimensions.width * (100 / opt.scale), 100), 60000),
             pageHeight: Math.min(Math.max(dimensions.height * (100 / opt.scale), 100), 60000),
-            pageMarginTop: opt.pageMarginTop ? opt.pageMarginTop : pageMargin.value,
-            pageMarginRight: opt.pageMarginRight ? opt.pageMarginRight : pageMargin.value,
-            pageMarginBottom: opt.pageMarginBottom ? opt.pageMarginBottom : pageMargin.value,
-            pageMarginLeft: opt.pageMarginLeft ? opt.pageMarginLeft : pageMargin.value,
+            pageMarginTop: opt.pageMarginTop ?? pageMargin.value,
+            pageMarginRight: opt.pageMarginRight ?? pageMargin.value,
+            pageMarginBottom: opt.pageMarginBottom ?? pageMargin.value,
+            pageMarginLeft: opt.pageMarginLeft ?? pageMargin.value,
         });
         if (viewMode.value === 'vertical') {
             opt.adjustPageHeight = true;
